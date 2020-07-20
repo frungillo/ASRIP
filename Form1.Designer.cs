@@ -37,10 +37,12 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnStampa = new System.Windows.Forms.Button();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.approvaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rifiutaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.attesaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCestino = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -95,8 +97,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.grigliaRichieste, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.grigliaRichieste, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -118,12 +120,24 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnCestino);
+            this.panel2.Controls.Add(this.btnStampa);
             this.panel2.Controls.Add(this.txtData);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(592, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(583, 31);
             this.panel2.TabIndex = 1;
+            // 
+            // btnStampa
+            // 
+            this.btnStampa.Location = new System.Drawing.Point(3, 4);
+            this.btnStampa.Name = "btnStampa";
+            this.btnStampa.Size = new System.Drawing.Size(75, 23);
+            this.btnStampa.TabIndex = 4;
+            this.btnStampa.Text = "Stampa Dati";
+            this.btnStampa.UseVisualStyleBackColor = true;
+            this.btnStampa.Click += new System.EventHandler(this.btnStampa_Click);
             // 
             // contextMenu
             // 
@@ -151,6 +165,15 @@
             this.attesaToolStripMenuItem.Name = "attesaToolStripMenuItem";
             this.attesaToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.attesaToolStripMenuItem.Text = "Attesa";
+            // 
+            // btnCestino
+            // 
+            this.btnCestino.Location = new System.Drawing.Point(84, 4);
+            this.btnCestino.Name = "btnCestino";
+            this.btnCestino.Size = new System.Drawing.Size(75, 23);
+            this.btnCestino.TabIndex = 5;
+            this.btnCestino.Text = "Cestino";
+            this.btnCestino.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -187,6 +210,8 @@
         private System.Windows.Forms.ToolStripMenuItem approvaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rifiutaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem attesaToolStripMenuItem;
+        private System.Windows.Forms.Button btnStampa;
+        private System.Windows.Forms.Button btnCestino;
     }
 }
 
