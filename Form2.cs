@@ -233,19 +233,26 @@ namespace ASRIP
                 Int32 rowsAffected = 0;
                 string UTENTE_AD = txtUTENTE_AD.Text.Trim();
                 string STAZIONE = txtSTAZIONE.Text.Trim();
-                string comando = "DELETE FROM WEBSITEANM.VARIAZIONI_USERLIST  WHERE UTENTE_AD = '" + UTENTE_AD + "' AND STAZIONE = '" + STAZIONE + "'";
-                if (connString.State == ConnectionState.Closed) connString.Open();
-                generiCommand.CommandText = comando;
-                rowsAffected = generiCommand.ExecuteNonQuery();
-                if (connString.State == ConnectionState.Open) connString.Close();
-                if (rowsAffected > 0)
+                string comando = "DELETE FROM WEBSITEANM.VARIAZIONI_USERLIST  WHERE UTENTE_AD = '" + UTENTE_AD + "'";
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                DialogResult result;
+                result = MessageBox.Show("Se scegli 'si', verranno eliminati tutti i record relativi all'utente selezionato. Procedo?", "Attenzione", buttons);
+                if (result == System.Windows.Forms.DialogResult.Yes)
                 {
-                    aBuonFine = true;
-                    clrScreen();
+                    if (connString.State == ConnectionState.Closed) connString.Open();
+                    generiCommand.CommandText = comando;
+                    rowsAffected = generiCommand.ExecuteNonQuery();
+                    if (connString.State == ConnectionState.Open) connString.Close();
+                    if (rowsAffected > 0)
+                    {
+                        aBuonFine = true;
+                        clrScreen();
+                    }
+                    else
+                    { aBuonFine = false; }
+                    timer1.Start();
                 }
-                else
-                { aBuonFine = false; }
-                timer1.Start();
+                
             }
             catch (Exception exc)
             {
