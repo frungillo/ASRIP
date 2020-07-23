@@ -60,9 +60,14 @@ namespace ASRIP
                 Application.Exit();
 
             }
-            if (AMBITO != "admin") btnCestino.Visible = false;
+            if (AMBITO != "admin")
+            {
+                btnCestino.Visible = false;
+                btnVARIAZIONI_USERLIST.Visible = false;
+            }
 
-            txtData.Value = DateTime.Now;
+
+                txtData.Value = DateTime.Now;
             if (ApplicationDeployment.IsNetworkDeployed) this.Text += " - Ver." + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
             
             compilaGriglia();
@@ -79,13 +84,6 @@ namespace ASRIP
             frmStato frm = new frmStato(numprot);
             frm.StartPosition = FormStartPosition.CenterParent;
             frm.ShowDialog(this);
-            if (frm.Reload)
-            {
-                txtRicerca.Text = "";
-                txtData.Value = DateTime.Now;
-                compilaGriglia();
-            }
-
         }
 
         private void GrigliaRichieste_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
@@ -198,7 +196,19 @@ namespace ASRIP
 
         }
 
-      
+        private void btnVARIAZIONI_USERLIST_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Form2 frmVARIAZIONI_USERLIST = new Form2();
+                frmVARIAZIONI_USERLIST.ShowDialog();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("btnVARIAZIONI_USERLIST_Click: " + exc.Message);
+                //throw;
+            }
+        }
     }
 
 }
