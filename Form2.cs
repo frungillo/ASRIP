@@ -236,6 +236,7 @@ namespace ASRIP
                 string comando = "DELETE FROM WEBSITEANM.VARIAZIONI_USERLIST  WHERE UTENTE_AD = '" + UTENTE_AD + "'";
                 MessageBoxButtons buttons = MessageBoxButtons.YesNo;
                 DialogResult result;
+                //scelta
                 result = MessageBox.Show("Se scegli 'si', verranno eliminati tutti i record relativi all'utente selezionato. Procedo?", "Attenzione", buttons);
                 if (result == System.Windows.Forms.DialogResult.Yes)
                 {
