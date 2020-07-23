@@ -79,6 +79,13 @@ namespace ASRIP
             frmStato frm = new frmStato(numprot);
             frm.StartPosition = FormStartPosition.CenterParent;
             frm.ShowDialog(this);
+            if (frm.Reload)
+            {
+                txtRicerca.Text = "";
+                txtData.Value = DateTime.Now;
+                compilaGriglia();
+            }
+
         }
 
         private void GrigliaRichieste_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)

@@ -15,9 +15,14 @@ namespace ASRIP
     public partial class frmStato : Form
     {
         string _numProtocollo;
+        private bool _reload;
+
+        public bool Reload { get => _reload;}
+
         public frmStato(string numProtocollo)
         {
             InitializeComponent();
+            _reload = false;
             _numProtocollo = numProtocollo;
             btnAnnulla.Click += (se, ev) => { this.Close(); };
             btnElimina.Click += BtnElimina_Click;
@@ -59,7 +64,8 @@ namespace ASRIP
             db.exe(sql_log);
             db.exe(sql_update);
             db.Dispose();
-
+            _reload = true;
+            this.Close();
         }
 
         private void BtnElimina_Click(object sender, EventArgs e)
@@ -124,8 +130,12 @@ namespace ASRIP
                     MessageBox.Show("Errore in fase 3 eliminazione, contattare ICT. LA RICHIESTA NON E' STATA ELIMINATA!", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                db.Dispose();
+                _reload = true;
+                this.Close();
 
             }
+            
             
         }
 
