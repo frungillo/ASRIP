@@ -37,13 +37,13 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnVARIAZIONI_USERLIST = new System.Windows.Forms.Button();
             this.btnCestino = new System.Windows.Forms.Button();
             this.btnStampa = new System.Windows.Forms.Button();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.approvaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rifiutaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.attesaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnVARIAZIONI_USERLIST = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -131,6 +131,16 @@
             this.panel2.Size = new System.Drawing.Size(583, 31);
             this.panel2.TabIndex = 1;
             // 
+            // btnVARIAZIONI_USERLIST
+            // 
+            this.btnVARIAZIONI_USERLIST.Location = new System.Drawing.Point(165, 5);
+            this.btnVARIAZIONI_USERLIST.Name = "btnVARIAZIONI_USERLIST";
+            this.btnVARIAZIONI_USERLIST.Size = new System.Drawing.Size(75, 23);
+            this.btnVARIAZIONI_USERLIST.TabIndex = 6;
+            this.btnVARIAZIONI_USERLIST.Text = "Abilitazioni";
+            this.btnVARIAZIONI_USERLIST.UseVisualStyleBackColor = true;
+            this.btnVARIAZIONI_USERLIST.Click += new System.EventHandler(this.btnVARIAZIONI_USERLIST_Click);
+            // 
             // btnCestino
             // 
             this.btnCestino.Location = new System.Drawing.Point(84, 4);
@@ -176,16 +186,6 @@
             this.attesaToolStripMenuItem.Name = "attesaToolStripMenuItem";
             this.attesaToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.attesaToolStripMenuItem.Text = "Attesa";
-            // 
-            // btnVARIAZIONI_USERLIST
-            // 
-            this.btnVARIAZIONI_USERLIST.Location = new System.Drawing.Point(165, 3);
-            this.btnVARIAZIONI_USERLIST.Name = "btnVARIAZIONI_USERLIST";
-            this.btnVARIAZIONI_USERLIST.Size = new System.Drawing.Size(75, 23);
-            this.btnVARIAZIONI_USERLIST.TabIndex = 6;
-            this.btnVARIAZIONI_USERLIST.Text = "Abilitazioni";
-            this.btnVARIAZIONI_USERLIST.UseVisualStyleBackColor = true;
-            this.btnVARIAZIONI_USERLIST.Click += new System.EventHandler(this.btnVARIAZIONI_USERLIST_Click);
             // 
             // Form1
             // 

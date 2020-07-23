@@ -44,6 +44,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnPULISCI = new System.Windows.Forms.Button();
+            this.btnCancellaRecord = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // txtUTENTE_AD
@@ -127,9 +128,9 @@
             // btnREGISTRA
             // 
             this.btnREGISTRA.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnREGISTRA.Location = new System.Drawing.Point(16, 222);
+            this.btnREGISTRA.Location = new System.Drawing.Point(16, 266);
             this.btnREGISTRA.Name = "btnREGISTRA";
-            this.btnREGISTRA.Size = new System.Drawing.Size(253, 80);
+            this.btnREGISTRA.Size = new System.Drawing.Size(253, 36);
             this.btnREGISTRA.TabIndex = 7;
             this.btnREGISTRA.Text = "Registra";
             this.btnREGISTRA.UseVisualStyleBackColor = true;
@@ -183,7 +184,7 @@
             // btnPULISCI
             // 
             this.btnPULISCI.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPULISCI.Location = new System.Drawing.Point(16, 169);
+            this.btnPULISCI.Location = new System.Drawing.Point(16, 224);
             this.btnPULISCI.Name = "btnPULISCI";
             this.btnPULISCI.Size = new System.Drawing.Size(253, 36);
             this.btnPULISCI.TabIndex = 13;
@@ -191,11 +192,23 @@
             this.btnPULISCI.UseVisualStyleBackColor = true;
             this.btnPULISCI.Click += new System.EventHandler(this.btnPULISCI_Click);
             // 
+            // btnCancellaRecord
+            // 
+            this.btnCancellaRecord.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancellaRecord.Location = new System.Drawing.Point(16, 182);
+            this.btnCancellaRecord.Name = "btnCancellaRecord";
+            this.btnCancellaRecord.Size = new System.Drawing.Size(253, 36);
+            this.btnCancellaRecord.TabIndex = 14;
+            this.btnCancellaRecord.Text = "Cancella record";
+            this.btnCancellaRecord.UseVisualStyleBackColor = true;
+            this.btnCancellaRecord.Click += new System.EventHandler(this.btnCancellaRecord_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(473, 346);
+            this.Controls.Add(this.btnCancellaRecord);
             this.Controls.Add(this.btnPULISCI);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label5);
@@ -237,5 +250,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnPULISCI;
+        private System.Windows.Forms.Button btnCancellaRecord;
     }
 }

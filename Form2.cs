@@ -24,6 +24,7 @@ namespace ASRIP
         private Int32 contatore = 0;
         private Boolean esiste = false;
         private string ambitoGlobale = "";
+        private string[] splitter;
 
         private void clrScreen()
         {
@@ -33,45 +34,58 @@ namespace ASRIP
             for (int i = 0; i < clbCENTRI_COSTO.Items.Count; i++) clbCENTRI_COSTO.SetItemChecked(i, false);
         }
 
+        public void compilaCAMPI(DataTable _dt)
+        {
+            splitter = _dt.Rows[0][4].ToString().Split(',');
+            txtUTENTE_AD.Text = _dt.Rows[0][0].ToString();
+            txtSTAZIONE.Text = _dt.Rows[0][1].ToString();
+            switch (_dt.Rows[0][2].ToString())
+            {
+                case "R":
+                    chkAMBITO.Checked = false;
+                    break;
+                default:
+                    chkAMBITO.Checked = true;
+                    if (_dt.Rows[0][2].ToString() == "admin")
+                    { ambitoGlobale = "admin"; }
+                    else { ambitoGlobale = "W"; }
+                    break;
+            }
+            foreach (string valore in splitter)
+            {
+
+                for (int i = 0; i < clbCENTRI_COSTO.Items.Count; i++)
+                {
+                    if (valore.Replace("'", "") == clbCENTRI_COSTO.Items[i].ToString())
+                    {
+                        clbCENTRI_COSTO.SetItemChecked(i, true);
+                        break;
+                    }
+                }
+
+            }
+        }
+
         private Boolean getUTENTE_AD(string UTENTE_AD)
         {
             Boolean esito = false;
-            string qry = "";
-            string[] splitter;
+            string qry = "";          
             dt = new DataTable();            
             qry = "SELECT * FROM WEBSITEANM.VARIAZIONI_USERLIST WHERE UTENTE_AD = '" + UTENTE_AD + "'";
             if (connString.State == ConnectionState.Closed) connString.Open();
             generiCommand.CommandText = qry;
             dt.Load(generiCommand.ExecuteReader());
-            if (dt.Rows.Count > 0)
+            if (dt.Rows.Count > 0 && dt.Rows.Count < 2)
             {
                 esito = true;
-                splitter = dt.Rows[0][4].ToString().Split(',');
-                txtUTENTE_AD.Text = dt.Rows[0][0].ToString();
-                txtSTAZIONE.Text = dt.Rows[0][1].ToString();
-                switch (dt.Rows[0][2].ToString())
-                {
-                    case "R":
-                        chkAMBITO.Checked = false;
-                        
-                        break;
-                    default:
-                        chkAMBITO.Checked = true;
-                        //if(dt.rows[0][2].tostri)
-                        break;
-                }
-                foreach (string valore in splitter)
-                {
-           
-                    for (int i = 0; i < clbCENTRI_COSTO.Items.Count; i++)
-                    {
-                        if (valore.Replace("'", "") == clbCENTRI_COSTO.Items[i].ToString())
-                        {
-                            clbCENTRI_COSTO.SetItemChecked(i, true);
-                            break;
-                        }
-                    }
-
+                compilaCAMPI(dt);
+            }else
+            {
+                if (dt.Rows.Count > 1) {
+                    esito = true;
+                    Form3 frmSCELTA = new Form3(dt);
+                    frmSCELTA.ShowDialog();
+                    compilaCAMPI(frmSCELTA.dtAppoggio);
                 }
             }
             
@@ -91,6 +105,7 @@ namespace ASRIP
                 generiCommand = new OracleCommand();
                 generiCommand = connString.CreateCommand();
                 AMBITO = "R";
+                this.Name = "frmVARIAZIONI_USERLIST";
             }
             catch (Exception exc)
             {
@@ -108,9 +123,14 @@ namespace ASRIP
                 string STAZIONE = txtSTAZIONE.Text.Trim();
                 string CENTRI_COSTO = "";
                 string comando = "";
-                
+
                 if (chkAMBITO.Checked)
-                { AMBITO = "W"; }
+                {
+                    if (ambitoGlobale == "admin") {
+                        AMBITO = "admin";
+                        ambitoGlobale = "";
+                    } else { AMBITO = "W"; }
+                }
                 else
                 { AMBITO = "R"; }
                 foreach (string item in clbCENTRI_COSTO.CheckedItems)
@@ -122,7 +142,7 @@ namespace ASRIP
                 if (esiste) //esiste
                 {
                     comando = "UPDATE WEBSITEANM.VARIAZIONI_USERLIST SET STAZIONE = '" + STAZIONE + "', AMBITO = '" +
-                        AMBITO + "', CENTRI_COSTO = '" + CENTRI_COSTO + "' WHERE UTENTE_AD = '" + UTENTE_AD + "'";
+                        AMBITO + "', CENTRI_COSTO = '" + CENTRI_COSTO + "' WHERE UTENTE_AD = '" + UTENTE_AD + "' AND STAZIONE = '" + STAZIONE + "'";
                 }
                 else
                 {
@@ -204,6 +224,34 @@ namespace ASRIP
                 }
             }
             
+        }
+
+        private void btnCancellaRecord_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Int32 rowsAffected = 0;
+                string UTENTE_AD = txtUTENTE_AD.Text.Trim();
+                string STAZIONE = txtSTAZIONE.Text.Trim();
+                string comando = "DELETE FROM WEBSITEANM.VARIAZIONI_USERLIST  WHERE UTENTE_AD = '" + UTENTE_AD + "' AND STAZIONE = '" + STAZIONE + "'";
+                if (connString.State == ConnectionState.Closed) connString.Open();
+                generiCommand.CommandText = comando;
+                rowsAffected = generiCommand.ExecuteNonQuery();
+                if (connString.State == ConnectionState.Open) connString.Close();
+                if (rowsAffected > 0)
+                {
+                    aBuonFine = true;
+                    clrScreen();
+                }
+                else
+                { aBuonFine = false; }
+                timer1.Start();
+            }
+            catch (Exception exc)
+            {
+
+                MessageBox.Show("btnCancellaRecord_Click: " + exc.Message);
+            }
         }
 
         //private void btnCERCA_Click(object sender, EventArgs e)
