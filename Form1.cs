@@ -281,7 +281,8 @@ namespace ASRIP
             else
             {
                 MessageBox.Show(esito, "Attenzione");
-            }         
+            }
+            ddbb.Dispose();
         }
     }
 
