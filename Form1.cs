@@ -43,7 +43,8 @@ namespace ASRIP
                 currentSate = "ANMIS1.ANM_VROS_D_CESTINOVARIAZIONI";
                 compilaGriglia();
 
-            } else
+            }
+            else
             {
                 btnCestino.Text = "Cestino";
                 currentSate = "ANMIS1.ANM_VROS_D_VARIAZIONI";
@@ -68,9 +69,9 @@ namespace ASRIP
             }
 
 
-                txtData.Value = DateTime.Now;
+            txtData.Value = DateTime.Now;
             if (ApplicationDeployment.IsNetworkDeployed) this.Text += " - Ver." + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-            
+
             compilaGriglia();
 
 
@@ -89,7 +90,7 @@ namespace ASRIP
 
         private void GrigliaRichieste_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            if(e.RowIndex>-1)
+            if (e.RowIndex > -1)
             {
 
             }
@@ -98,14 +99,15 @@ namespace ASRIP
         private void TxtRicerca_TextChanged(object sender, EventArgs e)
         {
             string sql = @"VARIAZIONI_CODICE like'*{0}*'  or NOMINATIVO like '*{0}*' or VARIAZIONI_NOTE like '*{0}*' or VARIAZIONI_DEP_INTERESSATO like '*{0}*'";
-            if(txtRicerca.Text.StartsWith("?"))
+            if (txtRicerca.Text.StartsWith("?"))
             {
-                if(txtRicerca.Text.EndsWith("?"))
+                if (txtRicerca.Text.EndsWith("?"))
                 {
                     try
                     {
                         _bs.Filter = txtRicerca.Text.Replace("?", "");
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         MessageBox.Show("Errore:" + ex.Message, "Errore QRY", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -137,8 +139,8 @@ namespace ASRIP
                 A.VARIAZIONI_UTENTE, 
                 LOWER(A.VARIAZIONI_NOTE) as VARIAZIONI_NOTE, 
                 A.VARIAZIONI_NUM_PROTOCOLLO";
-            if(currentSate== "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO";
-            sql +=$@" FROM {currentSate} A where VARIAZIONI_CODICE_BDROP=6 and to_date('{txtData.Value.ToShortDateString()}','dd/mm/yyyy')
+            if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO";
+            sql += $@" FROM {currentSate} A where VARIAZIONI_CODICE_BDROP=6 and to_date('{txtData.Value.ToShortDateString()}','dd/mm/yyyy')
             between variazioni_da_data and variazioni_a_data and
             variazioni_matricola in (select Matricolaautista 
                                         from bdroptables.residenzeautisti 
@@ -154,7 +156,7 @@ namespace ASRIP
         private void btnStampa_Click(object sender, EventArgs e)
         {
             SaveFileDialog dg = new SaveFileDialog();
-            dg.Filter="Valori separati da virgola (*.csv)|*.csv";
+            dg.Filter = "Valori separati da virgola (*.csv)|*.csv";
             dg.FileName = "StampaRichieste";
             dg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             dg.AddExtension = true;
@@ -218,10 +220,10 @@ namespace ASRIP
             string command = "";
             int i = 0;
             DialogResult scelta;
-            try
+            scelta = MessageBox.Show("Questo processo è irreversibile; vuoi confermare?", "Attenzione", MessageBoxButtons.YesNo);
+            if (scelta == DialogResult.Yes)
             {
-                scelta = MessageBox.Show("Questo processo è irreversibile; vuoi confermare?", "Attenzione", MessageBoxButtons.YesNo);
-                if (scelta == DialogResult.Yes)
+                try
                 {
                     foreach (DataGridViewRow riga in grigliaRichieste.Rows)
                     {
@@ -259,31 +261,33 @@ namespace ASRIP
                             }
                         }
                     }
+                    //ESECUZIONE DELLA LISTA COMANDI SUL DB
+                    db ddbb = new db();
+                    esito = ddbb.exeMultiplo(listaCOMANDI.ToArray());
+                    if (esito == "OK")
+                    {
+                        foreach (DataGridViewRow riga in grigliaRichieste.Rows)
+                        {
+                            if (riga.Cells[9].Value.ToString() != "A") riga.DefaultCellStyle.BackColor = Color.Azure;
+                        }
+                        scelta = new DialogResult();
+                        scelta = MessageBox.Show("Le " + i.ToString() + " righe presenti in questa maschera sono state correttamente caricate in VARIAZIONI BDROP. Vuoi stamparle?", "?", MessageBoxButtons.YesNo);
+                        if (scelta == DialogResult.Yes) btnStampa_Click(null, null);
+                    }
+                    else
+                    {
+                        MessageBox.Show(esito, "Attenzione");
+                    }
+                    ddbb.Dispose();
                 }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("btnCaricaVariazioni_Click: " + exc.Message);
-            }
-            //ESECUZIONE DEI COMANDI SUL DB
-            db ddbb = new db();
-            esito = ddbb.exeMultiplo(listaCOMANDI.ToArray());
-            if (esito == "OK")
-            {
-                foreach (DataGridViewRow riga in grigliaRichieste.Rows)
+                catch (Exception exc)
                 {
-                    if (riga.Cells[9].Value.ToString() != "A") riga.DefaultCellStyle.BackColor = Color.Azure;
+                    MessageBox.Show("btnCaricaVariazioni_Click: " + exc.Message);
                 }
-                scelta = new DialogResult();
-                scelta = MessageBox.Show("Le " + i.ToString() + " righe presenti in questa maschera sono state correttamente caricate in VARIAZIONI BDROP. Vuoi stamparle?","?", MessageBoxButtons.YesNo);
-                if (scelta == DialogResult.Yes) btnStampa_Click(null, null);
-            }
-            else
-            {
-                MessageBox.Show(esito, "Attenzione");
-            }
-            ddbb.Dispose();
-        }
-    }
 
+            }
+        }
+
+
+    }
 }
