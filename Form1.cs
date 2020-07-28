@@ -64,6 +64,7 @@ namespace ASRIP
             {
                 btnCestino.Visible = false;
                 btnVARIAZIONI_USERLIST.Visible = false;
+                btnCaricaVariazioni.Visible = false;
             }
 
 
@@ -207,6 +208,59 @@ namespace ASRIP
             {
                 MessageBox.Show("btnVARIAZIONI_USERLIST_Click: " + exc.Message);
                 //throw;
+            }
+        }
+
+        private void btnCaricaVariazioni_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string command = "";
+                int i = 0;
+                DialogResult scelta;
+                scelta = MessageBox.Show("Questo processo è irreversibile; vuoi confermare?", "Attenzione", MessageBoxButtons.YesNo);
+                if (scelta == DialogResult.Yes)
+                {
+                    foreach(DataGridViewRow riga in grigliaRichieste.Rows)
+                    {
+                        if (riga.Cells[9].Value.ToString() != "A")
+                        {
+                            DateTime dataINIZIO = new DateTime();
+                            DateTime dataFINE = new DateTime();
+                            DateTime dataDaINSERIRE = new DateTime();
+                            string[] coddip = riga.Cells[3].Value.ToString().Split(' ');
+                            string coddipSCAMBIO = riga.Cells[8].Value.ToString();
+                            string codiceTRATTAMENTO = riga.Cells[9].Value.ToString();
+                            if (coddipSCAMBIO == "") coddipSCAMBIO = "NULL";
+                            if (codiceTRATTAMENTO == "S") codiceTRATTAMENTO = "9"; else codiceTRATTAMENTO = "8";
+                            dataINIZIO = Convert.ToDateTime(riga.Cells[1].Value.ToString());
+                            dataFINE = Convert.ToDateTime(riga.Cells[2].Value.ToString());
+                            dataDaINSERIRE = dataINIZIO;
+                            i += 1;
+                            while (dataDaINSERIRE <= dataFINE)
+                            {
+                                //NON INSERISCO CODICE PER LA VERIFICA DI UN PRECEDENTE INSERIMENTO DELLA RIGA CORRENTE PERCHE' E' PRESENTE UNA CHIAVE PRIMARIA SUL DB
+                                //NEL CASO IL DB RISPONDESSE PICCHE, VADO IN ECCEZIONE E MANDO TUTTO IN ROLLBACK
+                                command = "";
+                                command = "INSERT INTO BDROPTABLES.VARIAZIONI VALUES('1','" + riga.Cells[0].Value + "',TO_DATE('" + dataDaINSERIRE.ToShortDateString() + "','DD/MM/YYYY'),'" +
+                                    coddip[0] + "',NULL,NULL,'" + riga.Cells[5].Value.ToString() + "NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'" + coddipSCAMBIO + "', NULL,'" +
+                                    codiceTRATTAMENTO + "',NULL,NULL,NULL,NULL,NULL, TO_DATE('" + riga.Cells[13].Value.ToString() + "','DD/MM/YYYY'))";
+                                dataDaINSERIRE = dataDaINSERIRE.AddDays(1);
+                                //CODICE PER L'ESECUZIONE DEL COMANDO CON EVENTUALE TRANSACTION ATTIVATA
+                            
+                            }
+                            riga.DefaultCellStyle.BackColor = Color.Azure;
+                        }
+                    }
+                    //EVENTUALE TRANSACTION.COMMIT
+                    MessageBox.Show("Le " + i.ToString() + " righe presenti in questa maschera sono state correttamente caricate in VARIAZIONI BDROP");
+                }
+               
+            }
+            catch (Exception exc)
+            {
+                //EVENTUALE TRANSACTION.ROLLBACK
+                MessageBox.Show("btnCaricaVariazioni_Click: " + exc.Message);
             }
         }
     }

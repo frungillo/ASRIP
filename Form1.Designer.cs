@@ -44,6 +44,7 @@
             this.approvaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rifiutaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.attesaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCaricaVariazioni = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -121,6 +122,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnCaricaVariazioni);
             this.panel2.Controls.Add(this.btnVARIAZIONI_USERLIST);
             this.panel2.Controls.Add(this.btnCestino);
             this.panel2.Controls.Add(this.btnStampa);
@@ -187,6 +189,16 @@
             this.attesaToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.attesaToolStripMenuItem.Text = "Attesa";
             // 
+            // btnCaricaVariazioni
+            // 
+            this.btnCaricaVariazioni.Location = new System.Drawing.Point(246, 5);
+            this.btnCaricaVariazioni.Name = "btnCaricaVariazioni";
+            this.btnCaricaVariazioni.Size = new System.Drawing.Size(108, 23);
+            this.btnCaricaVariazioni.TabIndex = 7;
+            this.btnCaricaVariazioni.Text = "Carica in Variazioni";
+            this.btnCaricaVariazioni.UseVisualStyleBackColor = true;
+            this.btnCaricaVariazioni.Click += new System.EventHandler(this.btnCaricaVariazioni_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -225,6 +237,7 @@
         private System.Windows.Forms.Button btnStampa;
         private System.Windows.Forms.Button btnCestino;
         private System.Windows.Forms.Button btnVARIAZIONI_USERLIST;
+        private System.Windows.Forms.Button btnCaricaVariazioni;
     }
 }
 
