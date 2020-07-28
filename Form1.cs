@@ -213,21 +213,24 @@ namespace ASRIP
 
         private void btnCaricaVariazioni_Click(object sender, EventArgs e)
         {
+            string esito = "";
+            List<string> listaCOMANDI = new List<string>();
+            string command = "";
+            int i = 0;
+            DialogResult scelta;
             try
             {
-                string command = "";
-                int i = 0;
-                DialogResult scelta;
                 scelta = MessageBox.Show("Questo processo è irreversibile; vuoi confermare?", "Attenzione", MessageBoxButtons.YesNo);
                 if (scelta == DialogResult.Yes)
                 {
-                    foreach(DataGridViewRow riga in grigliaRichieste.Rows)
+                    foreach (DataGridViewRow riga in grigliaRichieste.Rows)
                     {
                         if (riga.Cells[9].Value.ToString() != "A")
                         {
                             DateTime dataINIZIO = new DateTime();
                             DateTime dataFINE = new DateTime();
                             DateTime dataDaINSERIRE = new DateTime();
+                            string[] codBDROP_ANM = riga.Cells[0].Value.ToString().Split('-');
                             string[] coddip = riga.Cells[3].Value.ToString().Split(' ');
                             string coddipSCAMBIO = riga.Cells[8].Value.ToString();
                             string codiceTRATTAMENTO = riga.Cells[9].Value.ToString();
@@ -237,31 +240,48 @@ namespace ASRIP
                             dataFINE = Convert.ToDateTime(riga.Cells[2].Value.ToString());
                             dataDaINSERIRE = dataINIZIO;
                             i += 1;
+                            command = "";
+                            command = "UPDATE ANMIS1.ANM_VROS_D_VARIAZIONI SET VARIAZIONI_DATA_INSERIMENTO_UP = TRUNC(SYSDATE), VARIAZIONI_UTENTE_UP = '"
+                                + Environment.UserName + "',VARIAZIONI_TERMINALE_UP = '" + Environment.MachineName + "' WHERE VARIAZIONI_CODICE_BDROP = '"
+                                + codBDROP_ANM[0] + "' AND VARIAZIONI_CODICE_ANM = '" + codBDROP_ANM[1] + "' AND VARIAZIONI_MATRICOLA = '" + coddip[0]
+                                + "' AND VARIAZIONI_DA_DATA = TO_DATE('" + dataINIZIO.ToShortDateString() + "','DD/MM/YYYY')";
+                            listaCOMANDI.Add(command);
                             while (dataDaINSERIRE <= dataFINE)
                             {
                                 //NON INSERISCO CODICE PER LA VERIFICA DI UN PRECEDENTE INSERIMENTO DELLA RIGA CORRENTE PERCHE' E' PRESENTE UNA CHIAVE PRIMARIA SUL DB
                                 //NEL CASO IL DB RISPONDESSE PICCHE, VADO IN ECCEZIONE E MANDO TUTTO IN ROLLBACK
                                 command = "";
-                                command = "INSERT INTO BDROPTABLES.VARIAZIONI VALUES('1','" + riga.Cells[0].Value + "',TO_DATE('" + dataDaINSERIRE.ToShortDateString() + "','DD/MM/YYYY'),'" +
+                                command = "INSERT INTO BDROPTABLES.VARIAZIONI VALUES('" + codBDROP_ANM[0] + "','" + codBDROP_ANM[1] + "',TO_DATE('" + dataDaINSERIRE.ToShortDateString() + "','DD/MM/YYYY'),'" +
                                     coddip[0] + "',NULL,NULL,'" + riga.Cells[5].Value.ToString() + "NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'" + coddipSCAMBIO + "', NULL,'" +
                                     codiceTRATTAMENTO + "',NULL,NULL,NULL,NULL,NULL, TO_DATE('" + riga.Cells[13].Value.ToString() + "','DD/MM/YYYY'))";
                                 dataDaINSERIRE = dataDaINSERIRE.AddDays(1);
-                                //CODICE PER L'ESECUZIONE DEL COMANDO CON EVENTUALE TRANSACTION ATTIVATA
-                            
+                                listaCOMANDI.Add(command);
                             }
-                            riga.DefaultCellStyle.BackColor = Color.Azure;
                         }
                     }
-                    //EVENTUALE TRANSACTION.COMMIT
-                    MessageBox.Show("Le " + i.ToString() + " righe presenti in questa maschera sono state correttamente caricate in VARIAZIONI BDROP");
                 }
-               
             }
             catch (Exception exc)
             {
-                //EVENTUALE TRANSACTION.ROLLBACK
                 MessageBox.Show("btnCaricaVariazioni_Click: " + exc.Message);
             }
+            //ESECUZIONE DEI COMANDI SUL DB
+            db ddbb = new db();
+            esito = ddbb.exeMultiplo(listaCOMANDI.ToArray());
+            if (esito == "OK")
+            {
+                foreach (DataGridViewRow riga in grigliaRichieste.Rows)
+                {
+                    if (riga.Cells[9].Value.ToString() != "A") riga.DefaultCellStyle.BackColor = Color.Azure;
+                }
+                scelta = new DialogResult();
+                scelta = MessageBox.Show("Le " + i.ToString() + " righe presenti in questa maschera sono state correttamente caricate in VARIAZIONI BDROP. Vuoi stamparle?","?", MessageBoxButtons.YesNo);
+                if (scelta == DialogResult.Yes) btnStampa_Click(null, null);
+            }
+            else
+            {
+                MessageBox.Show(esito, "Attenzione");
+            }         
         }
     }
 

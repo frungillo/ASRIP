@@ -195,7 +195,7 @@
             this.btnCaricaVariazioni.Name = "btnCaricaVariazioni";
             this.btnCaricaVariazioni.Size = new System.Drawing.Size(108, 23);
             this.btnCaricaVariazioni.TabIndex = 7;
-            this.btnCaricaVariazioni.Text = "Carica in Variazioni";
+            this.btnCaricaVariazioni.Text = "Carica in BDROP";
             this.btnCaricaVariazioni.UseVisualStyleBackColor = true;
             this.btnCaricaVariazioni.Click += new System.EventHandler(this.btnCaricaVariazioni_Click);
             // 
