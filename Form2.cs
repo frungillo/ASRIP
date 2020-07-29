@@ -36,34 +36,38 @@ namespace ASRIP
 
         public void compilaCAMPI(DataTable _dt)
         {
-            splitter = _dt.Rows[0][4].ToString().Split(',');
-            txtUTENTE_AD.Text = _dt.Rows[0][0].ToString();
-            txtSTAZIONE.Text = _dt.Rows[0][1].ToString();
-            switch (_dt.Rows[0][2].ToString())
+            if(_dt.Rows.Count > 0)
             {
-                case "R":
-                    chkAMBITO.Checked = false;
-                    break;
-                default:
-                    chkAMBITO.Checked = true;
-                    if (_dt.Rows[0][2].ToString() == "admin")
-                    { ambitoGlobale = "admin"; }
-                    else { ambitoGlobale = "W"; }
-                    break;
-            }
-            foreach (string valore in splitter)
-            {
-
-                for (int i = 0; i < clbCENTRI_COSTO.Items.Count; i++)
+                splitter = _dt.Rows[0][4].ToString().Split(',');
+                txtUTENTE_AD.Text = _dt.Rows[0][0].ToString();
+                txtSTAZIONE.Text = _dt.Rows[0][1].ToString();
+                switch (_dt.Rows[0][2].ToString())
                 {
-                    if (valore.Replace("'", "") == clbCENTRI_COSTO.Items[i].ToString())
-                    {
-                        clbCENTRI_COSTO.SetItemChecked(i, true);
+                    case "R":
+                        chkAMBITO.Checked = false;
                         break;
-                    }
+                    default:
+                        chkAMBITO.Checked = true;
+                        if (_dt.Rows[0][2].ToString() == "admin")
+                        { ambitoGlobale = "admin"; }
+                        else { ambitoGlobale = "W"; }
+                        break;
                 }
+                foreach (string valore in splitter)
+                {
 
+                    for (int i = 0; i < clbCENTRI_COSTO.Items.Count; i++)
+                    {
+                        if (valore.Replace("'", "") == clbCENTRI_COSTO.Items[i].ToString())
+                        {
+                            clbCENTRI_COSTO.SetItemChecked(i, true);
+                            break;
+                        }
+                    }
+
+                }
             }
+            
         }
 
         private Boolean getUTENTE_AD(string UTENTE_AD)
