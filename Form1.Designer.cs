@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grigliaRichieste = new System.Windows.Forms.DataGridView();
             this.txtRicerca = new System.Windows.Forms.TextBox();
             this.lblRicerca = new System.Windows.Forms.Label();
@@ -56,8 +56,8 @@
             // 
             this.grigliaRichieste.AllowUserToAddRows = false;
             this.grigliaRichieste.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.grigliaRichieste.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.grigliaRichieste.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.grigliaRichieste.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tableLayoutPanel1.SetColumnSpan(this.grigliaRichieste, 2);
             this.grigliaRichieste.Dock = System.Windows.Forms.DockStyle.Fill;
