@@ -106,11 +106,18 @@ namespace ASRIP
                 Application.Exit();
 
             }
-            if (AMBITO != "admin")
+            if(AMBITO == "R")
             {
                 btnCestino.Visible = false;
                 btnVARIAZIONI_USERLIST.Visible = false;
                 btnCaricaVariazioni.Visible = false;
+            }
+
+            if (AMBITO != "admin")
+            {
+                //btnCestino.Visible = false;
+                btnVARIAZIONI_USERLIST.Visible = false;
+                //btnCaricaVariazioni.Visible = false;
             }
 
 
@@ -127,6 +134,7 @@ namespace ASRIP
 
         private void GrigliaRichieste_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (AMBITO == "R") { MessageBox.Show("Utente non autorizzato alla modifica", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             string numprot = grigliaRichieste[12, e.RowIndex].Value.ToString();
             frmStato frm = new frmStato(numprot);
             frm.StartPosition = FormStartPosition.CenterParent;
