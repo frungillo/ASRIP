@@ -130,6 +130,27 @@ namespace ASRIP
             txtRicerca.TextChanged += TxtRicerca_TextChanged;
             grigliaRichieste.RowsAdded += GrigliaRichieste_RowsAdded;
             grigliaRichieste.CellDoubleClick += GrigliaRichieste_CellDoubleClick;
+            //  grigliaRichieste.ContextMenu = contextMenu;
+            grigliaRichieste.MouseDown += GrigliaRichieste_MouseClick;
+            txtUtenteSel.TextChanged += txtUtenteSel_TextChanged;
+
+        }
+        private void txtUtenteSel_TextChanged(object sender, EventArgs e)
+        {
+            Size size = TextRenderer.MeasureText(txtUtenteSel.Text, txtUtenteSel.Font);
+            txtUtenteSel.Width = size.Width+10;
+            //textBox1.Height = size.Height;
+        }
+        private void GrigliaRichieste_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right)
+            {
+                DataGridView.HitTestInfo row = grigliaRichieste.HitTest(e.X, e.Y);
+                grigliaRichieste.ClearSelection();
+                txtUtenteSel.Text = (string)grigliaRichieste[3, row.RowIndex].Value;
+                grigliaRichieste.Rows[row.RowIndex].Selected = true;
+
+            }
         }
 
         private void GrigliaRichieste_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -178,21 +199,22 @@ namespace ASRIP
 
         private void compilaGriglia()
         {
-            string sql = $@"SELECT 
-                A.VARIAZIONI_CODICE_BDROP||'-'||A.VARIAZIONI_CODICE_ANM as VARIAZIONI_CODICE, 
-                A.VARIAZIONI_DA_DATA, 
-                A.VARIAZIONI_A_DATA, 
-                A.VARIAZIONI_MATRICOLA ||' - '|| (select cognome||' '|| nome from paghenet.arcdipan where coddip =A.VARIAZIONI_MATRICOLA) as NOMINATIVO, 
-                A.VARIAZIONI_DEP_INTERESSATO, 
-                A.VARIAZIONI_LINEA, 
-                A.VARIAZIONI_TRENO, 
-                A.VARIAZIONI_MONTO, 
-                A.VARIAZIONI_SCAMBIA_CON, 
-                A.VARIAZIONI_FLAG_CONSENSO, 
-                A.VARIAZIONI_UTENTE, 
-                LOWER(A.VARIAZIONI_NOTE) as VARIAZIONI_NOTE, 
-                A.VARIAZIONI_NUM_PROTOCOLLO";
-            if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO";
+
+            string sql = @"SELECT
+                A.VARIAZIONI_CODICE_BDROP||'-'||A.VARIAZIONI_CODICE_ANM as Codice, 
+                A.VARIAZIONI_DA_DATA as DA_DATA, 
+                A.VARIAZIONI_A_DATA as A_DATA, 
+                A.VARIAZIONI_MATRICOLA ||' - '|| (select cognome||' '|| nome from paghenet.arcdipan where coddip =A.VARIAZIONI_MATRICOLA) as Nominativo, 
+                A.VARIAZIONI_DEP_INTERESSATO as Deposito, 
+                A.VARIAZIONI_LINEA as Linea, 
+                A.VARIAZIONI_TRENO as Treno, 
+                A.VARIAZIONI_MONTO as Monto, 
+                A.VARIAZIONI_SCAMBIA_CON as Scambiante, 
+                A.VARIAZIONI_FLAG_CONSENSO as Cons, 
+                A.VARIAZIONI_UTENTE as Utente, 
+                LOWER(A.VARIAZIONI_NOTE) as Note, 
+                A.VARIAZIONI_NUM_PROTOCOLLO as Protocollo";
+            if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO as Data_Comun";
             sql += $@" FROM {currentSate} A where VARIAZIONI_CODICE_BDROP=6 and to_date('{txtData.Value.ToShortDateString()}','dd/mm/yyyy')
             between variazioni_da_data and variazioni_a_data and
             variazioni_matricola in (select Matricolaautista 
