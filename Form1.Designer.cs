@@ -49,11 +49,14 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.RichiestetoolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btnApprovaTutte = new System.Windows.Forms.Button();
+            this.btnNegaTutte = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).BeginInit();
             this.contextMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // grigliaRichieste
@@ -231,11 +234,31 @@
             // panel3
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel3, 2);
+            this.panel3.Controls.Add(this.btnNegaTutte);
+            this.panel3.Controls.Add(this.btnApprovaTutte);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 43);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1172, 34);
             this.panel3.TabIndex = 2;
+            // 
+            // btnApprovaTutte
+            // 
+            this.btnApprovaTutte.Location = new System.Drawing.Point(7, 6);
+            this.btnApprovaTutte.Name = "btnApprovaTutte";
+            this.btnApprovaTutte.Size = new System.Drawing.Size(88, 23);
+            this.btnApprovaTutte.TabIndex = 0;
+            this.btnApprovaTutte.Text = "Approva Tutte";
+            this.btnApprovaTutte.UseVisualStyleBackColor = true;
+            // 
+            // btnNegaTutte
+            // 
+            this.btnNegaTutte.Location = new System.Drawing.Point(99, 6);
+            this.btnNegaTutte.Name = "btnNegaTutte";
+            this.btnNegaTutte.Size = new System.Drawing.Size(75, 23);
+            this.btnNegaTutte.TabIndex = 1;
+            this.btnNegaTutte.Text = "Nega Tutte";
+            this.btnNegaTutte.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -256,6 +279,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -281,6 +305,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ToolStripMenuItem RichiestetoolStripMenuItem1;
+        private System.Windows.Forms.Button btnNegaTutte;
+        private System.Windows.Forms.Button btnApprovaTutte;
     }
 }
 
