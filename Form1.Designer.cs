@@ -64,21 +64,6 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.pbLogo_Wait = new System.Windows.Forms.PictureBox();
             this.btnCestino = new System.Windows.Forms.Button();
-<<<<<<< Updated upstream
-            this.btnStampa = new System.Windows.Forms.Button();
-            this.txtUtenteSel = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.RichiestetoolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.btnApprovaTutte = new System.Windows.Forms.Button();
-            this.btnNegaTutte = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).BeginInit();
-            this.contextMenu.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
-=======
             this.lblINFO = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,7 +76,6 @@
             this.bnCOMANDI.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo_Wait)).BeginInit();
             this.menuStrip1.SuspendLayout();
->>>>>>> Stashed changes
             this.SuspendLayout();
             // 
             // contextMenu
@@ -174,8 +158,8 @@
             this.grigliaRichieste.AllowUserToDeleteRows = false;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.grigliaRichieste.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
-            this.grigliaRichieste.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.grigliaRichieste.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grigliaRichieste.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grigliaRichieste.ContextMenuStrip = this.contextMenu;
@@ -367,16 +351,6 @@
             // 
             // toolStripSeparator6
             // 
-<<<<<<< Updated upstream
-            this.tableLayoutPanel1.SetColumnSpan(this.panel3, 2);
-            this.panel3.Controls.Add(this.btnNegaTutte);
-            this.panel3.Controls.Add(this.btnApprovaTutte);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(3, 43);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1172, 34);
-            this.panel3.TabIndex = 2;
-=======
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(6, 51);
             // 
@@ -459,25 +433,6 @@
             this.btnAllineaDB.Size = new System.Drawing.Size(160, 22);
             this.btnAllineaDB.Text = "Allinea database";
             this.btnAllineaDB.Click += new System.EventHandler(this.btnAllineaDB_Click);
->>>>>>> Stashed changes
-            // 
-            // btnApprovaTutte
-            // 
-            this.btnApprovaTutte.Location = new System.Drawing.Point(7, 6);
-            this.btnApprovaTutte.Name = "btnApprovaTutte";
-            this.btnApprovaTutte.Size = new System.Drawing.Size(88, 23);
-            this.btnApprovaTutte.TabIndex = 0;
-            this.btnApprovaTutte.Text = "Approva Tutte";
-            this.btnApprovaTutte.UseVisualStyleBackColor = true;
-            // 
-            // btnNegaTutte
-            // 
-            this.btnNegaTutte.Location = new System.Drawing.Point(99, 6);
-            this.btnNegaTutte.Name = "btnNegaTutte";
-            this.btnNegaTutte.Size = new System.Drawing.Size(75, 23);
-            this.btnNegaTutte.TabIndex = 1;
-            this.btnNegaTutte.Text = "Nega Tutte";
-            this.btnNegaTutte.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -503,13 +458,6 @@
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             this.contextMenu.ResumeLayout(false);
             this.contextMenu.PerformLayout();
-<<<<<<< Updated upstream
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-=======
             ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bnCOMANDI)).EndInit();
             this.bnCOMANDI.ResumeLayout(false);
@@ -517,7 +465,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbLogo_Wait)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
->>>>>>> Stashed changes
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -531,10 +478,6 @@
         private System.Windows.Forms.ToolStripTextBox txtUtenteSel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem RichiestetoolStripMenuItem1;
-<<<<<<< Updated upstream
-        private System.Windows.Forms.Button btnNegaTutte;
-        private System.Windows.Forms.Button btnApprovaTutte;
-=======
         private System.Windows.Forms.Button btnCaricaVariazioni;
         private System.Windows.Forms.DateTimePicker txtData;
         private System.Windows.Forms.DataGridView grigliaRichieste;
@@ -566,7 +509,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripMenuItem variazioniRosterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnAllineaDB;
->>>>>>> Stashed changes
     }
 }
 
