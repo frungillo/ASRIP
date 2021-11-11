@@ -45,13 +45,14 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnPULISCI = new System.Windows.Forms.Button();
             this.btnCancellaRecord = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtUTENTE_AD
             // 
             this.txtUTENTE_AD.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtUTENTE_AD.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUTENTE_AD.Location = new System.Drawing.Point(13, 59);
+            this.txtUTENTE_AD.Location = new System.Drawing.Point(13, 75);
             this.txtUTENTE_AD.Name = "txtUTENTE_AD";
             this.txtUTENTE_AD.Size = new System.Drawing.Size(214, 23);
             this.txtUTENTE_AD.TabIndex = 0;
@@ -61,7 +62,7 @@
             // 
             this.txtSTAZIONE.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtSTAZIONE.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSTAZIONE.Location = new System.Drawing.Point(241, 59);
+            this.txtSTAZIONE.Location = new System.Drawing.Point(241, 75);
             this.txtSTAZIONE.Name = "txtSTAZIONE";
             this.txtSTAZIONE.Size = new System.Drawing.Size(214, 23);
             this.txtSTAZIONE.TabIndex = 1;
@@ -70,7 +71,7 @@
             // 
             this.chkAMBITO.AutoSize = true;
             this.chkAMBITO.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkAMBITO.Location = new System.Drawing.Point(16, 136);
+            this.chkAMBITO.Location = new System.Drawing.Point(16, 152);
             this.chkAMBITO.Name = "chkAMBITO";
             this.chkAMBITO.Size = new System.Drawing.Size(15, 14);
             this.chkAMBITO.TabIndex = 2;
@@ -90,7 +91,7 @@
             "StPolare",
             "VPuglie",
             "VPuglie2"});
-            this.clbCENTRI_COSTO.Location = new System.Drawing.Point(335, 136);
+            this.clbCENTRI_COSTO.Location = new System.Drawing.Point(335, 152);
             this.clbCENTRI_COSTO.Name = "clbCENTRI_COSTO";
             this.clbCENTRI_COSTO.Size = new System.Drawing.Size(120, 166);
             this.clbCENTRI_COSTO.TabIndex = 3;
@@ -99,7 +100,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(12, 41);
+            this.label1.Location = new System.Drawing.Point(12, 57);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 15);
             this.label1.TabIndex = 4;
@@ -109,7 +110,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(238, 41);
+            this.label2.Location = new System.Drawing.Point(238, 57);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(217, 15);
             this.label2.TabIndex = 5;
@@ -128,7 +129,7 @@
             // btnREGISTRA
             // 
             this.btnREGISTRA.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnREGISTRA.Location = new System.Drawing.Point(16, 266);
+            this.btnREGISTRA.Location = new System.Drawing.Point(16, 282);
             this.btnREGISTRA.Name = "btnREGISTRA";
             this.btnREGISTRA.Size = new System.Drawing.Size(253, 36);
             this.btnREGISTRA.TabIndex = 7;
@@ -140,7 +141,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(13, 117);
+            this.label4.Location = new System.Drawing.Point(13, 133);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(252, 15);
             this.label4.TabIndex = 8;
@@ -151,7 +152,7 @@
             this.lblMONITOR.AutoSize = true;
             this.lblMONITOR.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMONITOR.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.lblMONITOR.Location = new System.Drawing.Point(94, 317);
+            this.lblMONITOR.Location = new System.Drawing.Point(94, 333);
             this.lblMONITOR.Name = "lblMONITOR";
             this.lblMONITOR.Size = new System.Drawing.Size(290, 22);
             this.lblMONITOR.TabIndex = 10;
@@ -167,7 +168,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(13, 9);
+            this.label5.Location = new System.Drawing.Point(5, 10);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(364, 15);
             this.label5.TabIndex = 11;
@@ -176,15 +177,15 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panel1.Location = new System.Drawing.Point(15, 27);
+            this.panel1.Location = new System.Drawing.Point(6, 28);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(440, 2);
+            this.panel1.Size = new System.Drawing.Size(460, 2);
             this.panel1.TabIndex = 12;
             // 
             // btnPULISCI
             // 
             this.btnPULISCI.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPULISCI.Location = new System.Drawing.Point(16, 224);
+            this.btnPULISCI.Location = new System.Drawing.Point(16, 240);
             this.btnPULISCI.Name = "btnPULISCI";
             this.btnPULISCI.Size = new System.Drawing.Size(253, 36);
             this.btnPULISCI.TabIndex = 13;
@@ -195,7 +196,7 @@
             // btnCancellaRecord
             // 
             this.btnCancellaRecord.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancellaRecord.Location = new System.Drawing.Point(16, 182);
+            this.btnCancellaRecord.Location = new System.Drawing.Point(16, 198);
             this.btnCancellaRecord.Name = "btnCancellaRecord";
             this.btnCancellaRecord.Size = new System.Drawing.Size(253, 36);
             this.btnCancellaRecord.TabIndex = 14;
@@ -203,11 +204,23 @@
             this.btnCancellaRecord.UseVisualStyleBackColor = true;
             this.btnCancellaRecord.Click += new System.EventHandler(this.btnCancellaRecord_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Consolas", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.label6.Location = new System.Drawing.Point(3, 33);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(462, 15);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "scrivi l\'utente e conferma il dato per conoscerne le abilitazioni";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(473, 346);
+            this.ClientSize = new System.Drawing.Size(473, 361);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.btnCancellaRecord);
             this.Controls.Add(this.btnPULISCI);
             this.Controls.Add(this.panel1);
@@ -224,7 +237,7 @@
             this.Controls.Add(this.txtUTENTE_AD);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(489, 385);
+            this.MaximumSize = new System.Drawing.Size(489, 400);
             this.Name = "Form2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "VARIAZIONI USER LIST";
@@ -251,5 +264,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnPULISCI;
         private System.Windows.Forms.Button btnCancellaRecord;
+        private System.Windows.Forms.Label label6;
     }
 }

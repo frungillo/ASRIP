@@ -21,17 +21,113 @@ namespace ASRIP
         private BindingSource _bs;
         private string currentSate = "ANMIS1.ANM_VROS_D_VARIAZIONI";
         private int i = 0;
+        private int x, y;
+        string LISTA_CC;
+        string AMBITO;
 
-        public Form1()
+        private void confermaRigheConCodiceUno(ref DataTable dt)
         {
-            InitializeComponent();
-            _bs = new BindingSource();
-            this.Load += Form1_Load;
-            btnCestino.Click += BtnCestino_Click;
-            txtData.ValueChanged += TxtData_ValueChanged;
+            int i = 0;
+            foreach (DataRow riga in dt.Rows)
+            {
+                if (riga.ItemArray[0].ToString().Substring(0, 1) == "1")
+                {
+                    dt.Rows[i][9] = "S";
+                }
+                i++;
+            }
         }
+        private void coloraRIGHE()
+        {
+            foreach(DataGridViewRow dgvRIGA in grigliaRichieste.Rows)
+            {
+                if(dgvRIGA.Cells[0].Value.ToString().Substring(0,1) == "1")
+                {
+                    dgvRIGA.DefaultCellStyle.BackColor = Color.LightPink;
+                }
+            }
+        }
+        private void compilaGriglia()
+        {
 
-        private List<string> srotolaGridView()
+            //string sql = @"SELECT
+            //    A.VARIAZIONI_CODICE_BDROP||'-'||A.VARIAZIONI_CODICE_ANM as CODICE, 
+            //    A.VARIAZIONI_DA_DATA as DA_DATA, 
+            //    A.VARIAZIONI_A_DATA as A_DATA, 
+            //    A.VARIAZIONI_MATRICOLA ||' - '|| (select cognome||' '|| nome from paghenet.arcdipan where coddip =A.VARIAZIONI_MATRICOLA) as NOMINATIVO, 
+            //    A.VARIAZIONI_DEP_INTERESSATO as DEPOSITO, 
+            //    A.VARIAZIONI_LINEA as LINEA, 
+            //    A.VARIAZIONI_TRENO as TRENO, 
+            //    A.VARIAZIONI_MONTO as MONTO, 
+            //    A.VARIAZIONI_SCAMBIA_CON as SCAMBIANTE, 
+            //    A.VARIAZIONI_FLAG_CONSENSO as CONS, 
+            //    A.VARIAZIONI_UTENTE as UTENTE, 
+            //    LOWER(A.VARIAZIONI_NOTE) as NOTE, 
+            //    A.VARIAZIONI_NUM_PROTOCOLLO as PROTOCOLLO";
+            //if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO as Data_Comun";
+            //sql += $@" FROM {currentSate} A where VARIAZIONI_CODICE_BDROP=6 and to_date('{txtData.Value.ToShortDateString()}','dd/mm/yyyy')
+            //between variazioni_da_data and variazioni_a_data and
+            //variazioni_matricola in (select Matricolaautista 
+            //                            from bdroptables.residenzeautisti 
+            //                            where residenza in ({LISTA_CC})
+            //                         and trunc(sysdate) between iniziovalidita and finevalidita )
+            //order by VARIAZIONI_DA_DATA, VARIAZIONI_MATRICOLA ";
+
+            //VERSIONE PROVA
+            int i = 0;
+            db db = new db();
+            DataTable dt = new DataTable();
+            string sql = @"SELECT
+                A.VARIAZIONI_CODICE_BDROP||'-'||A.VARIAZIONI_CODICE_ANM as CODICE, 
+                A.VARIAZIONI_DA_DATA as DA_DATA, 
+                A.VARIAZIONI_A_DATA as A_DATA, 
+                A.VARIAZIONI_MATRICOLA ||' - '|| (select cognome||' '|| nome from paghenet.arcdipan where coddip =A.VARIAZIONI_MATRICOLA) as NOMINATIVO, 
+                A.VARIAZIONI_DEP_INTERESSATO as DEPOSITO, 
+                A.VARIAZIONI_LINEA as LINEA, 
+                A.VARIAZIONI_TRENO as TRENO, 
+                A.VARIAZIONI_MONTO as MONTO, 
+                A.VARIAZIONI_SCAMBIA_CON as SCAMBIANTE, 
+                A.VARIAZIONI_FLAG_CONSENSO as CONS, 
+                A.VARIAZIONI_UTENTE as UTENTE, 
+                LOWER(A.VARIAZIONI_NOTE) as NOTE, 
+                A.VARIAZIONI_NUM_PROTOCOLLO as PROTOCOLLO";
+            if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO as Data_Comun";
+            sql += $@" FROM {currentSate} A WHERE TRIM(A.VARIAZIONI_CODICE_BDROP) IN ('1','2','4','5','6','7') 
+            and to_date('{txtData.Value.ToShortDateString()}','dd/mm/yyyy')
+            between A.variazioni_da_data and A.variazioni_a_data and
+            A.variazioni_matricola in (select Matricolaautista 
+                                        from bdroptables.residenzeautisti 
+                                        where residenza in ({LISTA_CC})
+                                     and trunc(sysdate) between iniziovalidita and finevalidita )
+            order by A.VARIAZIONI_DA_DATA, A.VARIAZIONI_MATRICOLA ";
+            //AND TRIM(VARIAZIONI_CODICE_ANM) IN ('11A','11C','A','AA','33A','33C','7')
+
+            
+            _bs = new BindingSource();           
+            dt = db.getDataTable(sql);
+            //_bs.DataSource = db.getDataTable(sql);
+            //snocciolo la datatable per mettere ad "S" tutti i codici bdrop = 1
+            confermaRigheConCodiceUno(ref dt);
+            _bs.DataSource = dt;
+            bnCOMANDI.BindingSource = _bs;
+            grigliaRichieste.DataSource = _bs;
+            coloraRIGHE();
+            db.Dispose();
+        }
+        private bool checkAut()
+        {
+            db db = new db();
+            string sql = "select * from variazioni_userlist where utente_ad = '" + Environment.UserName.ToUpper() + "' and (stazione = '" + Environment.MachineName + "' or stazione='*')";
+            OracleDataReader r = db.getReader(sql);
+            if (!r.HasRows) { db.Dispose(); return false; }
+            r.Read();
+            LISTA_CC = r[4].ToString();
+            AMBITO = r[2].ToString();
+            db.Dispose();
+            return true;
+
+        }
+        private List<string> snocciolaGridView()
         {
             List<string> listaCOMANDI = new List<string>();
             string command = "";
@@ -74,206 +170,225 @@ namespace ASRIP
             }
             return listaCOMANDI;
         }
+        public Form1()
+        {
+            InitializeComponent();
+            _bs = new BindingSource();
+            this.Load += Form1_Load;
+           // btnCestino.Click += BtnCestino_Click;
+            //txtData.ValueChanged += TxtData_ValueChanged;
+        }        
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!checkAut())
+                {
+                    MessageBox.Show("Utente/Stazione non autorizzato all'uso del programma, contattare il gestiore della procedura.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    Application.Exit();
+                }
+                if (AMBITO == "R")
+                {
+                    btnCestino.Visible = false;
+                    btnABILITAZIONI.Visible = false;
+                    btnCaricaVariazioni.Visible = false;
+                }
 
+                if (AMBITO != "admin")
+                {
+                    //btnCestino.Visible = false;
+                    btnABILITAZIONI.Visible = false;
+                    //btnCaricaVariazioni.Visible = false;
+                }
+
+
+                txtData.Value = DateTime.Now;
+                if (ApplicationDeployment.IsNetworkDeployed) this.Text += " - Ver." + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+
+                //caricamento iniziale della gridview
+                compilaGriglia();
+
+
+                //txtRicerca.TextChanged += TxtRicerca_TextChanged;
+                //grigliaRichieste.RowsAdded += GrigliaRichieste_RowsAdded;
+                grigliaRichieste.CellDoubleClick += GrigliaRichieste_CellDoubleClick;
+                //  grigliaRichieste.ContextMenu = contextMenu;
+                grigliaRichieste.MouseDown += GrigliaRichieste_MouseClick;
+                txtUtenteSel.TextChanged += txtUtenteSel_TextChanged;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Form1_Load: " + exc.Message, "Attenzione");
+                Application.Exit();
+            }
+        }
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                switch (e.KeyData)
+                {
+                    case Keys.F2:
+                        btnVARIAZIONI_USERLIST_Click(null, null);
+                        break;
+                    case Keys.F7:
+                        btnStampa_Click(null, null);
+                        break;
+                }
+
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("Form1_KeyUp: " + exc.Message, "Attenzione");
+            }
+        }         
+        private void txtUtenteSel_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                Size size = TextRenderer.MeasureText(txtUtenteSel.Text, txtUtenteSel.Font);
+                txtUtenteSel.Width = size.Width + 10;
+                //textBox1.Height = size.Height;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("txtUtenteSel_TextChanged: " + exc.Message, "Attenzione");
+            }
+        }
+        private void GrigliaRichieste_MouseClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    x = 0; y = 0;
+                    x = e.X; y = e.Y;
+                    DataGridView.HitTestInfo row = grigliaRichieste.HitTest(e.X, e.Y);
+                    if (row.RowIndex > -1)
+                    {
+                        grigliaRichieste.ClearSelection();
+                        txtUtenteSel.Text = (string)grigliaRichieste[3, row.RowIndex].Value;
+                        grigliaRichieste.Rows[row.RowIndex].Selected = true;
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("GrigliaRichieste_MouseClick: " + exc.Message, "Attenzione");
+            }
+        }
+        private void GrigliaRichieste_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex > -1)
+                {
+                    if (AMBITO == "R") { MessageBox.Show("Utente non autorizzato alla modifica", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+                    string numprot = grigliaRichieste[12, e.RowIndex].Value.ToString();
+                    frmStato frm = new frmStato(numprot);
+                    frm.StartPosition = FormStartPosition.CenterParent;
+                    frm.ShowDialog(this);
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("GrigliaRichieste_CellDoubleClick: " + exc.Message, "Attenzione");
+            }
+        }
         private void TxtData_ValueChanged(object sender, EventArgs e)
         {
             compilaGriglia();
         }
-
-        private void BtnCestino_Click(object sender, EventArgs e)
-        {
-            if (btnCestino.Text == "Cestino")
-            {
-                btnCestino.Text = "Variazioni";
-                currentSate = "ANMIS1.ANM_VROS_D_CESTINOVARIAZIONI";
-                compilaGriglia();
-
-            }
-            else
-            {
-                btnCestino.Text = "Cestino";
-                currentSate = "ANMIS1.ANM_VROS_D_VARIAZIONI";
-                compilaGriglia();
-            }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            if (!checkAut())
-            {
-                MessageBox.Show("Utente/Stazione non autorizzato all'uso del programma, contattare il gestiore della procedura.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-
-                Application.Exit();
-
-            }
-            if(AMBITO == "R")
-            {
-                btnCestino.Visible = false;
-                btnVARIAZIONI_USERLIST.Visible = false;
-                btnCaricaVariazioni.Visible = false;
-            }
-
-            if (AMBITO != "admin")
-            {
-                //btnCestino.Visible = false;
-                btnVARIAZIONI_USERLIST.Visible = false;
-                //btnCaricaVariazioni.Visible = false;
-            }
-
-
-            txtData.Value = DateTime.Now;
-            if (ApplicationDeployment.IsNetworkDeployed) this.Text += " - Ver." + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-
-            compilaGriglia();
-
-
-            txtRicerca.TextChanged += TxtRicerca_TextChanged;
-            grigliaRichieste.RowsAdded += GrigliaRichieste_RowsAdded;
-            grigliaRichieste.CellDoubleClick += GrigliaRichieste_CellDoubleClick;
-            //  grigliaRichieste.ContextMenu = contextMenu;
-            grigliaRichieste.MouseDown += GrigliaRichieste_MouseClick;
-            txtUtenteSel.TextChanged += txtUtenteSel_TextChanged;
-
-        }
-        private void txtUtenteSel_TextChanged(object sender, EventArgs e)
-        {
-            Size size = TextRenderer.MeasureText(txtUtenteSel.Text, txtUtenteSel.Font);
-            txtUtenteSel.Width = size.Width+10;
-            //textBox1.Height = size.Height;
-        }
-        private void GrigliaRichieste_MouseClick(object sender, MouseEventArgs e)
-        {
-            if(e.Button == MouseButtons.Right)
-            {
-                DataGridView.HitTestInfo row = grigliaRichieste.HitTest(e.X, e.Y);
-                grigliaRichieste.ClearSelection();
-                txtUtenteSel.Text = (string)grigliaRichieste[3, row.RowIndex].Value;
-                grigliaRichieste.Rows[row.RowIndex].Selected = true;
-
-            }
-        }
-
-        private void GrigliaRichieste_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (AMBITO == "R") { MessageBox.Show("Utente non autorizzato alla modifica", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
-            string numprot = grigliaRichieste[12, e.RowIndex].Value.ToString();
-            frmStato frm = new frmStato(numprot);
-            frm.StartPosition = FormStartPosition.CenterParent;
-            frm.ShowDialog(this);
-        }
-
-        private void GrigliaRichieste_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-
-            }
-        }
-
         private void TxtRicerca_TextChanged(object sender, EventArgs e)
         {
-            string sql = @"VARIAZIONI_CODICE like'*{0}*'  or NOMINATIVO like '*{0}*' or VARIAZIONI_NOTE like '*{0}*' or VARIAZIONI_DEP_INTERESSATO like '*{0}*'";
-            if (txtRicerca.Text.StartsWith("?"))
+            try
             {
-                if (txtRicerca.Text.EndsWith("?"))
+                string sql = @"CODICE like'*{0}*'  or NOMINATIVO like '*{0}*' or NOTE like '*{0}*' or DEPOSITO like '*{0}*'";
+                if (txtRicerca.Text.StartsWith("?"))
                 {
-                    try
+                    if (txtRicerca.Text.EndsWith("?"))
                     {
-                        _bs.Filter = txtRicerca.Text.Replace("?", "");
+                        try
+                        {
+                            _bs.Filter = txtRicerca.Text.Replace("?", "");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Errore:" + ex.Message, "Errore QRY", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Errore:" + ex.Message, "Errore QRY", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                    return;
                 }
-                return;
-            }
 
-            if (txtRicerca.Text.Length >= 2)
+                if (txtRicerca.Text.Length >= 2)
+                {
+                    _bs.Filter = string.Format(sql, txtRicerca.Text);
+                }
+                else _bs.RemoveFilter();
+                coloraRIGHE();
+            }
+            catch (Exception exc)
             {
-                _bs.Filter = string.Format(sql, txtRicerca.Text);
+                MessageBox.Show("TxtRicerca_TextChanged: " + exc.Message, "Attenzione");
             }
-            else _bs.RemoveFilter();
+            
         }
-
-        private void compilaGriglia()
+        private void BtnCestino_Click(object sender, EventArgs e)
         {
-
-            string sql = @"SELECT
-                A.VARIAZIONI_CODICE_BDROP||'-'||A.VARIAZIONI_CODICE_ANM as Codice, 
-                A.VARIAZIONI_DA_DATA as DA_DATA, 
-                A.VARIAZIONI_A_DATA as A_DATA, 
-                A.VARIAZIONI_MATRICOLA ||' - '|| (select cognome||' '|| nome from paghenet.arcdipan where coddip =A.VARIAZIONI_MATRICOLA) as Nominativo, 
-                A.VARIAZIONI_DEP_INTERESSATO as Deposito, 
-                A.VARIAZIONI_LINEA as Linea, 
-                A.VARIAZIONI_TRENO as Treno, 
-                A.VARIAZIONI_MONTO as Monto, 
-                A.VARIAZIONI_SCAMBIA_CON as Scambiante, 
-                A.VARIAZIONI_FLAG_CONSENSO as Cons, 
-                A.VARIAZIONI_UTENTE as Utente, 
-                LOWER(A.VARIAZIONI_NOTE) as Note, 
-                A.VARIAZIONI_NUM_PROTOCOLLO as Protocollo";
-            if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO as Data_Comun";
-            sql += $@" FROM {currentSate} A where VARIAZIONI_CODICE_BDROP=6 and to_date('{txtData.Value.ToShortDateString()}','dd/mm/yyyy')
-            between variazioni_da_data and variazioni_a_data and
-            variazioni_matricola in (select Matricolaautista 
-                                        from bdroptables.residenzeautisti 
-                                        where residenza in ({LISTA_CC})
-                                     and trunc(sysdate) between iniziovalidita and finevalidita )
-            order by VARIAZIONI_DA_DATA, VARIAZIONI_MATRICOLA ";
-            db db = new db();
-            _bs.DataSource = db.getDataTable(sql);
-            grigliaRichieste.DataSource = _bs;
-            db.Dispose();
+            try
+            {
+                if (btnCestino.Text == "Cestino")
+                {
+                    btnCestino.Text = "Variazioni";
+                    currentSate = "ANMIS1.ANM_VROS_D_CESTINOVARIAZIONI";
+                    compilaGriglia();
+                }
+                else
+                {
+                    btnCestino.Text = "Cestino";
+                    currentSate = "ANMIS1.ANM_VROS_D_VARIAZIONI";
+                    compilaGriglia();
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("BtnCestino_Click: " + exc.Message, "Attenzione");
+            }
         }
-
         private void btnStampa_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dg = new SaveFileDialog();
-            dg.Filter = "Valori separati da virgola (*.csv)|*.csv";
-            dg.FileName = "StampaRichieste";
-            dg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            dg.AddExtension = true;
-            dg.DefaultExt = "csv";
-            dg.Title = "Stampa Dati";
-            dg.ShowDialog(this);
-
-            StreamWriter w = new StreamWriter(dg.FileName, false);
-            string ret = "NOMINATIVO;Richiesta;Tratt.;\r\n";
-            foreach (DataGridViewRow row in grigliaRichieste.Rows)
+            try
             {
-                ret += row.Cells[3].Value.ToString() + ";" +
-                    row.Cells[0].Value.ToString() + " (" +
-                    row.Cells[11].Value.ToString() + ");" +
-                    row.Cells[9].Value.ToString() + ";\r\n";
-
-
+                SaveFileDialog dg = new SaveFileDialog();
+                dg.Filter = "Valori separati da virgola (*.csv)|*.csv";
+                dg.FileName = "StampaRichieste";
+                dg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                dg.AddExtension = true;
+                dg.DefaultExt = "csv";
+                dg.Title = "Stampa Dati";
+                if (dg.ShowDialog(this) == DialogResult.OK)
+                {
+                    StreamWriter w = new StreamWriter(dg.FileName, false);
+                    string ret = "NOMINATIVO;Richiesta;Tratt.;\r\n";
+                    foreach (DataGridViewRow row in grigliaRichieste.Rows)
+                    {
+                        ret += row.Cells[3].Value.ToString() + ";" +
+                            row.Cells[0].Value.ToString() + " (" +
+                            row.Cells[11].Value.ToString() + ");" +
+                            row.Cells[9].Value.ToString() + ";\r\n";
+                    }
+                    w.Write(ret);
+                    w.Flush();
+                    w.Close();
+                    Process.Start(dg.FileName);
+                }
             }
-            w.Write(ret);
-            w.Flush();
-            w.Close();
-            Process.Start(dg.FileName);
-
-        }
-
-        string LISTA_CC;
-        string AMBITO;
-
-        private bool checkAut()
-        {
-            db db = new db();
-            string sql = "select * from variazioni_userlist where utente_ad = '" + Environment.UserName.ToUpper() + "' and (stazione = '" + Environment.MachineName + "' or stazione='*')";
-            OracleDataReader r = db.getReader(sql);
-            if (!r.HasRows) { db.Dispose(); return false; }
-            r.Read();
-            LISTA_CC = r[4].ToString();
-            AMBITO = r[2].ToString();
-            db.Dispose();
-            return true;
-
-        }
-
+            catch (Exception exc)
+            {
+                MessageBox.Show("btnStampa_Click: " + exc.Message, "Attenzione");
+            }
+        }            
         private void btnVARIAZIONI_USERLIST_Click(object sender, EventArgs e)
         {
             try
@@ -287,7 +402,6 @@ namespace ASRIP
                 //throw;
             }
         }
-
         private void btnCaricaVariazioni_Click(object sender, EventArgs e)
         {
             string esito = "";
@@ -298,11 +412,11 @@ namespace ASRIP
             {
                 try
                 {
-                    listaCOMANDI = srotolaGridView();
+                    listaCOMANDI = snocciolaGridView();
                 }
                 catch (Exception exc)
                 {
-                    MessageBox.Show("btnCaricaVariazioni_Click: " + exc.Message);
+                    MessageBox.Show("btnCaricaVariazioni_Click; durante la creazione della lista comandi di aggiornamento db, si è verificato il seguente errore: " + exc.Message);
                     return;
                 }
                 //ESECUZIONE DELLA LISTA COMANDI SUL DB
@@ -332,6 +446,53 @@ namespace ASRIP
                 }              
             }
         }
-
+        private void btnAllineaDB_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Form4 frmDATE = new Form4();
+                frmDATE.ShowDialog();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("btnAllineaDB_Click: " + exc.Message, "Attenzione");
+            }
+        }
+        private void btnEXIT_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Application.Exit();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("btnEXIT_Click: " + exc.Message, "Attenzione");
+            }
+        }
+        private void contextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                DataGridViewRow dgvRIGA = new DataGridViewRow();
+                int rowIndex = grigliaRichieste.HitTest(x, y).RowIndex;
+                if (rowIndex < 0)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    dgvRIGA = grigliaRichieste.Rows[rowIndex];
+                    if (dgvRIGA.Cells[0].Value.ToString().Substring(0, 1) == "1")
+                    {
+                        e.Cancel = true;
+                        MessageBox.Show("Richiesta non soggetta ad alterazione dello stato", "Attenzione");
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("contextMenu_Opening: " + exc.Message, "Attenzione");
+            }
+        }
     }
 }

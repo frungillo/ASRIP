@@ -61,6 +61,7 @@
             this.btnSalva.TabIndex = 1;
             this.btnSalva.Text = "SALVA";
             this.btnSalva.UseVisualStyleBackColor = true;
+            this.btnSalva.Click += new System.EventHandler(this.btnSalva_Click);
             // 
             // btnAnnulla
             // 
@@ -86,9 +87,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(91, 136);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(108, 18);
+            this.label1.Size = new System.Drawing.Size(112, 18);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Stao Richiesta:";
+            this.label1.Text = "Stato Richiesta:";
             // 
             // txtDataDal
             // 
@@ -158,6 +159,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmStato";
             this.Text = "Stato Richiesta";
+            this.Load += new System.EventHandler(this.frmStato_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
