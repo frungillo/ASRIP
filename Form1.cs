@@ -12,6 +12,8 @@ using System.Net;
 using System.IO;
 using System.Diagnostics;
 using System.Deployment.Application;
+using System.Reflection;
+
 
 namespace ASRIP
 {
@@ -24,56 +26,33 @@ namespace ASRIP
         private int x, y;
         string LISTA_CC;
         string AMBITO;
+        private string _richieste = "'1','2','4','5','6','7'";
 
-        private void confermaRigheConCodiceUno(ref DataTable dt)
-        {
-            int i = 0;
-            foreach (DataRow riga in dt.Rows)
-            {
-                if (riga.ItemArray[0].ToString().Substring(0, 1) == "1")
-                {
-                    dt.Rows[i][9] = "S";
-                }
-                i++;
-            }
-        }
-        private void coloraRIGHE()
+
+        
+
+    static void SetDoubleBuffer(Control dgv, bool DoubleBuffered)
+    {
+        typeof(Control).InvokeMember("DoubleBuffered",
+            BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty,
+            null, dgv, new object[] { DoubleBuffered });
+    }
+
+    private void coloraRIGHE()
         {
             foreach(DataGridViewRow dgvRIGA in grigliaRichieste.Rows)
             {
-                if(dgvRIGA.Cells[0].Value.ToString().Substring(0,1) == "1")
+                if(dgvRIGA.Cells[0].Value.ToString().StartsWith("1") ||
+                    dgvRIGA.Cells[0].Value.ToString().StartsWith("4") )
                 {
-                    dgvRIGA.DefaultCellStyle.BackColor = Color.LightPink;
+                    dgvRIGA.DefaultCellStyle.BackColor = Color.LightGray;
+                    dgvRIGA.DefaultCellStyle.Font = new Font("Calibri", 10, FontStyle.Italic);
+                    dgvRIGA.DefaultCellStyle.ForeColor = Color.Gray;
                 }
             }
         }
         private void compilaGriglia()
         {
-
-            //string sql = @"SELECT
-            //    A.VARIAZIONI_CODICE_BDROP||'-'||A.VARIAZIONI_CODICE_ANM as CODICE, 
-            //    A.VARIAZIONI_DA_DATA as DA_DATA, 
-            //    A.VARIAZIONI_A_DATA as A_DATA, 
-            //    A.VARIAZIONI_MATRICOLA ||' - '|| (select cognome||' '|| nome from paghenet.arcdipan where coddip =A.VARIAZIONI_MATRICOLA) as NOMINATIVO, 
-            //    A.VARIAZIONI_DEP_INTERESSATO as DEPOSITO, 
-            //    A.VARIAZIONI_LINEA as LINEA, 
-            //    A.VARIAZIONI_TRENO as TRENO, 
-            //    A.VARIAZIONI_MONTO as MONTO, 
-            //    A.VARIAZIONI_SCAMBIA_CON as SCAMBIANTE, 
-            //    A.VARIAZIONI_FLAG_CONSENSO as CONS, 
-            //    A.VARIAZIONI_UTENTE as UTENTE, 
-            //    LOWER(A.VARIAZIONI_NOTE) as NOTE, 
-            //    A.VARIAZIONI_NUM_PROTOCOLLO as PROTOCOLLO";
-            //if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO as Data_Comun";
-            //sql += $@" FROM {currentSate} A where VARIAZIONI_CODICE_BDROP=6 and to_date('{txtData.Value.ToShortDateString()}','dd/mm/yyyy')
-            //between variazioni_da_data and variazioni_a_data and
-            //variazioni_matricola in (select Matricolaautista 
-            //                            from bdroptables.residenzeautisti 
-            //                            where residenza in ({LISTA_CC})
-            //                         and trunc(sysdate) between iniziovalidita and finevalidita )
-            //order by VARIAZIONI_DA_DATA, VARIAZIONI_MATRICOLA ";
-
-            //VERSIONE PROVA
             int i = 0;
             db db = new db();
             DataTable dt = new DataTable();
@@ -87,14 +66,18 @@ namespace ASRIP
                 A.VARIAZIONI_TRENO as TRENO, 
                 A.VARIAZIONI_MONTO as MONTO, 
                 A.VARIAZIONI_SCAMBIA_CON as SCAMBIANTE, 
-                A.VARIAZIONI_FLAG_CONSENSO as CONS, 
+                CASE A.VARIAZIONI_CODICE_BDROP 
+                    when 1 then '--'
+                    when 4 then '--'
+                    else  A.VARIAZIONI_FLAG_CONSENSO
+                end as CONS,
                 A.VARIAZIONI_UTENTE as UTENTE, 
                 LOWER(A.VARIAZIONI_NOTE) as NOTE, 
                 A.VARIAZIONI_NUM_PROTOCOLLO as PROTOCOLLO";
             if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO as Data_Comun";
-            sql += $@" FROM {currentSate} A WHERE TRIM(A.VARIAZIONI_CODICE_BDROP) IN ('1','2','4','5','6','7') 
-            and to_date('{txtData.Value.ToShortDateString()}','dd/mm/yyyy')
-            between A.variazioni_da_data and A.variazioni_a_data and
+            sql += $@" FROM {currentSate} A WHERE TRIM(A.VARIAZIONI_CODICE_BDROP) IN ({_richieste}) 
+            and A.variazioni_da_data between to_date('{txtDataDa.Value.ToShortDateString()}','dd/mm/yyyy') and to_date('{txtDataA.Value.ToShortDateString()}','dd/mm/yyyy')
+            and
             A.variazioni_matricola in (select Matricolaautista 
                                         from bdroptables.residenzeautisti 
                                         where residenza in ({LISTA_CC})
@@ -105,11 +88,10 @@ namespace ASRIP
             
             _bs = new BindingSource();           
             dt = db.getDataTable(sql);
-            //_bs.DataSource = db.getDataTable(sql);
-            //snocciolo la datatable per mettere ad "S" tutti i codici bdrop = 1
-            confermaRigheConCodiceUno(ref dt);
+            
             _bs.DataSource = dt;
             bnCOMANDI.BindingSource = _bs;
+            SetDoubleBuffer(grigliaRichieste, true);
             grigliaRichieste.DataSource = _bs;
             coloraRIGHE();
             db.Dispose();
@@ -202,7 +184,7 @@ namespace ASRIP
                 }
 
 
-                txtData.Value = DateTime.Now;
+                txtDataDa.Value = DateTime.Now;
                 if (ApplicationDeployment.IsNetworkDeployed) this.Text += " - Ver." + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
 
                 //caricamento iniziale della gridview
@@ -210,7 +192,7 @@ namespace ASRIP
 
 
                 //txtRicerca.TextChanged += TxtRicerca_TextChanged;
-                //grigliaRichieste.RowsAdded += GrigliaRichieste_RowsAdded;
+                
                 grigliaRichieste.CellDoubleClick += GrigliaRichieste_CellDoubleClick;
                 //  grigliaRichieste.ContextMenu = contextMenu;
                 grigliaRichieste.MouseDown += GrigliaRichieste_MouseClick;
@@ -285,6 +267,12 @@ namespace ASRIP
                 {
                     if (AMBITO == "R") { MessageBox.Show("Utente non autorizzato alla modifica", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
                     string numprot = grigliaRichieste[12, e.RowIndex].Value.ToString();
+                    if (grigliaRichieste[0, e.RowIndex].Value.ToString().StartsWith("1")||
+                        grigliaRichieste[0, e.RowIndex].Value.ToString().StartsWith("4"))
+                    {
+                        MessageBox.Show("Non è possibile alterare questo tipo di richiesta.", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     frmStato frm = new frmStato(numprot);
                     frm.StartPosition = FormStartPosition.CenterParent;
                     frm.ShowDialog(this);
@@ -295,10 +283,7 @@ namespace ASRIP
                 MessageBox.Show("GrigliaRichieste_CellDoubleClick: " + exc.Message, "Attenzione");
             }
         }
-        private void TxtData_ValueChanged(object sender, EventArgs e)
-        {
-            compilaGriglia();
-        }
+     
         private void TxtRicerca_TextChanged(object sender, EventArgs e)
         {
             try
@@ -469,6 +454,36 @@ namespace ASRIP
                 MessageBox.Show("btnEXIT_Click: " + exc.Message, "Attenzione");
             }
         }
+
+        private void ricaricaDatiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            compilaGriglia();
+        }
+
+        private void chkMostraSoloRichieste_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkMostraSoloRichieste.Checked) _richieste = "'6'"; else _richieste = "'1','2','4','5','6','7'";
+            compilaGriglia();
+        }
+
+        private void btnFiltra_Click(object sender, EventArgs e)
+        {
+            compilaGriglia();
+        }
+
+        private void txtDataDa_ValueChanged(object sender, EventArgs e)
+        {
+            txtDataA.Value = txtDataDa.Value.AddDays(3);
+        }
+
+        private void txtDataA_ValueChanged(object sender, EventArgs e)
+        {
+            if (txtDataA.Value < txtDataDa.Value)
+            {
+                txtDataA.Value = txtDataDa.Value;
+            }
+        }
+
         private void contextMenu_Opening(object sender, CancelEventArgs e)
         {
             try

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.txtUtenteSel = new System.Windows.Forms.ToolStripTextBox();
@@ -40,7 +40,7 @@
             this.attesaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RichiestetoolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnCaricaVariazioni = new System.Windows.Forms.Button();
-            this.txtData = new System.Windows.Forms.DateTimePicker();
+            this.txtDataDa = new System.Windows.Forms.DateTimePicker();
             this.grigliaRichieste = new System.Windows.Forms.DataGridView();
             this.bnCOMANDI = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -70,6 +70,11 @@
             this.btnEXIT = new System.Windows.Forms.ToolStripMenuItem();
             this.variazioniRosterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAllineaDB = new System.Windows.Forms.ToolStripMenuItem();
+            this.ricaricaDatiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkMostraSoloRichieste = new System.Windows.Forms.CheckBox();
+            this.txtDataA = new System.Windows.Forms.DateTimePicker();
+            this.btnFiltra = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.contextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bnCOMANDI)).BeginInit();
@@ -141,37 +146,37 @@
             this.btnCaricaVariazioni.UseVisualStyleBackColor = false;
             this.btnCaricaVariazioni.Click += new System.EventHandler(this.btnCaricaVariazioni_Click);
             // 
-            // txtData
+            // txtDataDa
             // 
-            this.txtData.CalendarFont = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtData.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtData.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.txtData.Location = new System.Drawing.Point(3, 78);
-            this.txtData.Name = "txtData";
-            this.txtData.Size = new System.Drawing.Size(144, 30);
-            this.txtData.TabIndex = 10;
-            this.txtData.ValueChanged += new System.EventHandler(this.TxtData_ValueChanged);
+            this.txtDataDa.CalendarFont = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDataDa.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDataDa.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.txtDataDa.Location = new System.Drawing.Point(79, 78);
+            this.txtDataDa.Name = "txtDataDa";
+            this.txtDataDa.Size = new System.Drawing.Size(144, 30);
+            this.txtDataDa.TabIndex = 10;
+            this.txtDataDa.ValueChanged += new System.EventHandler(this.txtDataDa_ValueChanged);
             // 
             // grigliaRichieste
             // 
             this.grigliaRichieste.AllowUserToAddRows = false;
             this.grigliaRichieste.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.grigliaRichieste.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
-            this.grigliaRichieste.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Ivory;
+            this.grigliaRichieste.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.grigliaRichieste.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grigliaRichieste.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grigliaRichieste.ContextMenuStrip = this.contextMenu;
-            this.grigliaRichieste.Location = new System.Drawing.Point(3, 114);
+            this.grigliaRichieste.Location = new System.Drawing.Point(3, 124);
             this.grigliaRichieste.MultiSelect = false;
             this.grigliaRichieste.Name = "grigliaRichieste";
             this.grigliaRichieste.ReadOnly = true;
             this.grigliaRichieste.RowHeadersVisible = false;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grigliaRichieste.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grigliaRichieste.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.grigliaRichieste.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grigliaRichieste.Size = new System.Drawing.Size(1247, 604);
+            this.grigliaRichieste.Size = new System.Drawing.Size(1247, 594);
             this.grigliaRichieste.TabIndex = 8;
             // 
             // bnCOMANDI
@@ -421,7 +426,8 @@
             // variazioniRosterToolStripMenuItem
             // 
             this.variazioniRosterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnAllineaDB});
+            this.btnAllineaDB,
+            this.ricaricaDatiToolStripMenuItem});
             this.variazioniRosterToolStripMenuItem.Name = "variazioniRosterToolStripMenuItem";
             this.variazioniRosterToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
             this.variazioniRosterToolStripMenuItem.Text = "Variazioni roster";
@@ -430,20 +436,72 @@
             // 
             this.btnAllineaDB.Image = ((System.Drawing.Image)(resources.GetObject("btnAllineaDB.Image")));
             this.btnAllineaDB.Name = "btnAllineaDB";
-            this.btnAllineaDB.Size = new System.Drawing.Size(160, 22);
+            this.btnAllineaDB.Size = new System.Drawing.Size(180, 22);
             this.btnAllineaDB.Text = "Allinea database";
             this.btnAllineaDB.Click += new System.EventHandler(this.btnAllineaDB_Click);
+            // 
+            // ricaricaDatiToolStripMenuItem
+            // 
+            this.ricaricaDatiToolStripMenuItem.Name = "ricaricaDatiToolStripMenuItem";
+            this.ricaricaDatiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ricaricaDatiToolStripMenuItem.Text = "Ricarica dati";
+            this.ricaricaDatiToolStripMenuItem.Click += new System.EventHandler(this.ricaricaDatiToolStripMenuItem_Click);
+            // 
+            // chkMostraSoloRichieste
+            // 
+            this.chkMostraSoloRichieste.AutoSize = true;
+            this.chkMostraSoloRichieste.Location = new System.Drawing.Point(808, 78);
+            this.chkMostraSoloRichieste.Name = "chkMostraSoloRichieste";
+            this.chkMostraSoloRichieste.Size = new System.Drawing.Size(173, 19);
+            this.chkMostraSoloRichieste.TabIndex = 159;
+            this.chkMostraSoloRichieste.Text = "Mostra solo richieste";
+            this.chkMostraSoloRichieste.UseVisualStyleBackColor = true;
+            this.chkMostraSoloRichieste.CheckedChanged += new System.EventHandler(this.chkMostraSoloRichieste_CheckedChanged);
+            // 
+            // txtDataA
+            // 
+            this.txtDataA.CalendarFont = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDataA.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDataA.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.txtDataA.Location = new System.Drawing.Point(229, 78);
+            this.txtDataA.Name = "txtDataA";
+            this.txtDataA.Size = new System.Drawing.Size(144, 30);
+            this.txtDataA.TabIndex = 160;
+            this.txtDataA.ValueChanged += new System.EventHandler(this.txtDataA_ValueChanged);
+            // 
+            // btnFiltra
+            // 
+            this.btnFiltra.Location = new System.Drawing.Point(379, 78);
+            this.btnFiltra.Name = "btnFiltra";
+            this.btnFiltra.Size = new System.Drawing.Size(46, 30);
+            this.btnFiltra.TabIndex = 161;
+            this.btnFiltra.Text = "Filtra";
+            this.btnFiltra.UseVisualStyleBackColor = true;
+            this.btnFiltra.Click += new System.EventHandler(this.btnFiltra_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(0, 86);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 15);
+            this.label1.TabIndex = 162;
+            this.label1.Text = "Range Date";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1254, 739);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnFiltra);
+            this.Controls.Add(this.txtDataA);
+            this.Controls.Add(this.chkMostraSoloRichieste);
             this.Controls.Add(this.lblINFO);
             this.Controls.Add(this.pbLogo_Wait);
             this.Controls.Add(this.btnCaricaVariazioni);
             this.Controls.Add(this.btnCestino);
-            this.Controls.Add(this.txtData);
+            this.Controls.Add(this.txtDataDa);
             this.Controls.Add(this.grigliaRichieste);
             this.Controls.Add(this.bnCOMANDI);
             this.Controls.Add(this.menuStrip1);
@@ -479,7 +537,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem RichiestetoolStripMenuItem1;
         private System.Windows.Forms.Button btnCaricaVariazioni;
-        private System.Windows.Forms.DateTimePicker txtData;
+        private System.Windows.Forms.DateTimePicker txtDataDa;
         private System.Windows.Forms.DataGridView grigliaRichieste;
         private System.Windows.Forms.BindingNavigator bnCOMANDI;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
@@ -509,6 +567,11 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripMenuItem variazioniRosterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnAllineaDB;
+        private System.Windows.Forms.ToolStripMenuItem ricaricaDatiToolStripMenuItem;
+        private System.Windows.Forms.CheckBox chkMostraSoloRichieste;
+        private System.Windows.Forms.DateTimePicker txtDataA;
+        private System.Windows.Forms.Button btnFiltra;
+        private System.Windows.Forms.Label label1;
     }
 }
 
