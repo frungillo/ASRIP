@@ -27,7 +27,7 @@ namespace ASRIP
         string LISTA_CC;
         string AMBITO;
         private string _richieste = "'1','2','4','5','6','7'";
-
+        private List<string> _ProtocolliSel;
 
         
 
@@ -42,17 +42,41 @@ namespace ASRIP
         {
             foreach(DataGridViewRow dgvRIGA in grigliaRichieste.Rows)
             {
+                foreach(DataGridViewCell cella in dgvRIGA.Cells)
+                {
+                    cella.ReadOnly = true;
+                   
+                }
                 if(dgvRIGA.Cells[0].Value.ToString().StartsWith("1") ||
                     dgvRIGA.Cells[0].Value.ToString().StartsWith("4") )
                 {
                     dgvRIGA.DefaultCellStyle.BackColor = Color.LightGray;
                     dgvRIGA.DefaultCellStyle.Font = new Font("Calibri", 10, FontStyle.Italic);
                     dgvRIGA.DefaultCellStyle.ForeColor = Color.Gray;
+                } else { dgvRIGA.Cells[13].ReadOnly = false; dgvRIGA.Cells[13].Value = false; }
+                if (dgvRIGA.Cells[8].Value.ToString() == "S")
+                {
+                    dgvRIGA.Cells[8].Style.BackColor = Color.LightGreen;
+
+                }
+                if (dgvRIGA.Cells[8].Value.ToString() == "N")
+                {
+                    dgvRIGA.Cells[8].Style.BackColor = Color.LightSalmon;
+
+                }
+                if (dgvRIGA.Cells[8].Value.ToString() == "A")
+                {
+                    dgvRIGA.Cells[8].Style.BackColor = Color.LightYellow;
+
                 }
             }
         }
         private void compilaGriglia()
         {
+            grigliaRichieste.DataSource = null;
+            grigliaRichieste.Rows.Clear();
+            grigliaRichieste.Columns.Clear();
+            
             int i = 0;
             db db = new db();
             DataTable dt = new DataTable();
@@ -62,9 +86,8 @@ namespace ASRIP
                 A.VARIAZIONI_A_DATA as A_DATA, 
                 A.VARIAZIONI_MATRICOLA ||' - '|| (select cognome||' '|| nome from paghenet.arcdipan where coddip =A.VARIAZIONI_MATRICOLA) as NOMINATIVO, 
                 A.VARIAZIONI_DEP_INTERESSATO as DEPOSITO, 
-                A.VARIAZIONI_LINEA as LINEA, 
-                A.VARIAZIONI_TRENO as TRENO, 
-                A.VARIAZIONI_MONTO as MONTO, 
+                A.VARIAZIONI_LINEA || ' ' ||A.VARIAZIONI_TRENO as TURNO, 
+                to_char(A.VARIAZIONI_MONTO,'HH24:mm') as MONTO, 
                 A.VARIAZIONI_SCAMBIA_CON as SCAMBIANTE, 
                 CASE A.VARIAZIONI_CODICE_BDROP 
                     when 1 then '--'
@@ -93,8 +116,30 @@ namespace ASRIP
             bnCOMANDI.BindingSource = _bs;
             SetDoubleBuffer(grigliaRichieste, true);
             grigliaRichieste.DataSource = _bs;
-            coloraRIGHE();
+           
             db.Dispose();
+            DataGridViewCheckBoxColumn col = new DataGridViewCheckBoxColumn();
+            col.DisplayIndex = 0;
+            col.HeaderText = "SEL";
+            col.ValueType = typeof(bool);
+            grigliaRichieste.Columns.Add(col);
+            coloraRIGHE();
+            grigliaRichieste.Columns[0].Width = 40; //codice
+            grigliaRichieste.Columns[1].Width = 80; //da da
+            grigliaRichieste.Columns[2].Width = 80; // a da
+            grigliaRichieste.Columns[3].Width = 250; //nome
+            grigliaRichieste.Columns[4].Width = 90; //dep
+            grigliaRichieste.Columns[5].Width = 60; //lin
+           
+            grigliaRichieste.Columns[6].Width = 60; // monto
+            grigliaRichieste.Columns[7].Width = 60; // scambia
+            grigliaRichieste.Columns[8].Width = 20; // cons
+            grigliaRichieste.Columns[9].Width = 50; // ute
+            grigliaRichieste.Columns[10].Width = 200;
+            grigliaRichieste.Columns[11].Width = 60;
+            grigliaRichieste.Columns[12].Width = 120;
+            grigliaRichieste.Columns[13].Width = 30;
+
         }
         private bool checkAut()
         {
@@ -116,15 +161,15 @@ namespace ASRIP
             i = 0;
             foreach (DataGridViewRow riga in grigliaRichieste.Rows)
             {
-                if (riga.Cells[9].Value.ToString() != "A")
+                if (riga.Cells[8].Value.ToString() != "A")
                 {
                     DateTime dataINIZIO = new DateTime();
                     DateTime dataFINE = new DateTime();
                     DateTime dataDaINSERIRE = new DateTime();
                     string[] codBDROP_ANM = riga.Cells[0].Value.ToString().Split('-');
                     string[] coddip = riga.Cells[3].Value.ToString().Split(' ');
-                    string coddipSCAMBIO = riga.Cells[8].Value.ToString();
-                    string codiceTRATTAMENTO = riga.Cells[9].Value.ToString();
+                    string coddipSCAMBIO = riga.Cells[7].Value.ToString();
+                    string codiceTRATTAMENTO = riga.Cells[8].Value.ToString();
                     if (coddipSCAMBIO == "") coddipSCAMBIO = "NULL";
                     if (codiceTRATTAMENTO == "S") codiceTRATTAMENTO = "9"; else codiceTRATTAMENTO = "8";
                     dataINIZIO = Convert.ToDateTime(riga.Cells[1].Value.ToString());
@@ -194,9 +239,11 @@ namespace ASRIP
                 //txtRicerca.TextChanged += TxtRicerca_TextChanged;
                 
                 grigliaRichieste.CellDoubleClick += GrigliaRichieste_CellDoubleClick;
+                grigliaRichieste.CellContentClick += GrigliaRichieste_CellContentClick;
                 //  grigliaRichieste.ContextMenu = contextMenu;
                 grigliaRichieste.MouseDown += GrigliaRichieste_MouseClick;
                 txtUtenteSel.TextChanged += txtUtenteSel_TextChanged;
+                _ProtocolliSel = new List<string>();
             }
             catch (Exception exc)
             {
@@ -204,6 +251,32 @@ namespace ASRIP
                 Application.Exit();
             }
         }
+
+        private void GrigliaRichieste_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.ColumnIndex == 13 && grigliaRichieste[8, e.RowIndex].Value.ToString() != "--")
+            {
+                if (!(bool)grigliaRichieste[13, e.RowIndex].Value) {
+                    grigliaRichieste[13, e.RowIndex].Value = true;
+                    _ProtocolliSel.Add(grigliaRichieste[11, e.RowIndex].Value.ToString());
+                } else
+                {
+                    grigliaRichieste[13, e.RowIndex].Value = false;
+                    _ProtocolliSel.Remove(grigliaRichieste[11, e.RowIndex].Value.ToString());
+                }
+                lblINFO.Text = "Selezionati " + _ProtocolliSel.Count();
+                if (_ProtocolliSel.Count > 0) PulsantiGesitone(true); else PulsantiGesitone(false);
+            }
+            
+        }
+
+        private void PulsantiGesitone(bool stato)
+        {
+            btnApprovaSel.Enabled = stato;
+            btnAttesaSel.Enabled = stato;
+            btnRifiutaSel.Enabled = stato;
+        }
+
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             try
@@ -266,7 +339,7 @@ namespace ASRIP
                 if (e.RowIndex > -1)
                 {
                     if (AMBITO == "R") { MessageBox.Show("Utente non autorizzato alla modifica", "Errore", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
-                    string numprot = grigliaRichieste[12, e.RowIndex].Value.ToString();
+                    string numprot = grigliaRichieste[11, e.RowIndex].Value.ToString();
                     if (grigliaRichieste[0, e.RowIndex].Value.ToString().StartsWith("1")||
                         grigliaRichieste[0, e.RowIndex].Value.ToString().StartsWith("4"))
                     {
@@ -413,7 +486,7 @@ namespace ASRIP
                     {
                         foreach (DataGridViewRow riga in grigliaRichieste.Rows)
                         {
-                            if (riga.Cells[9].Value.ToString() != "A") riga.DefaultCellStyle.BackColor = Color.Azure;
+                            if (riga.Cells[8].Value.ToString() != "A") riga.DefaultCellStyle.BackColor = Color.Azure;
                         }
                         scelta = new DialogResult();
                         scelta = MessageBox.Show("Le righe presenti in questa maschera, in stato diverso da 'attesa', sono " + i.ToString() + " e sono state correttamente caricate in VARIAZIONI BDROP. Vuoi stamparle?", "?", MessageBoxButtons.YesNo);
@@ -463,6 +536,7 @@ namespace ASRIP
         private void chkMostraSoloRichieste_CheckedChanged(object sender, EventArgs e)
         {
             if (chkMostraSoloRichieste.Checked) _richieste = "'6'"; else _richieste = "'1','2','4','5','6','7'";
+            txtRicerca.Text = "";
             compilaGriglia();
         }
 
@@ -482,6 +556,36 @@ namespace ASRIP
             {
                 txtDataA.Value = txtDataDa.Value;
             }
+        }
+        private bool _tuttiSel = false;
+        private void btnSelTutti_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in grigliaRichieste.Rows)
+            {
+                if(row.Cells[8].Value.ToString() != "--")
+                {
+                    row.Cells[13].Value = _tuttiSel ? false:true;
+                    if ((bool)row.Cells[13].Value)
+                    {
+                        _ProtocolliSel.Add(row.Cells[11].Value.ToString());
+                    }
+                    else
+                    {
+                        _ProtocolliSel.Remove(row.Cells[11].Value.ToString());
+                    }
+                  
+                }
+            }
+            lblINFO.Text = "Selezionati " + _ProtocolliSel.Count();
+            _tuttiSel = _tuttiSel?false: true;
+            if (_ProtocolliSel.Count > 0) PulsantiGesitone(true); else PulsantiGesitone(false);
+        }
+
+        private void btnRicercaAvanzata_Click(object sender, EventArgs e)
+        {
+            frmRicercaAvanzata frm = new frmRicercaAvanzata(grigliaRichieste);
+            frm.StartPosition = FormStartPosition.CenterParent;
+            frm.ShowDialog(this);
         }
 
         private void contextMenu_Opening(object sender, CancelEventArgs e)

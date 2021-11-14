@@ -44,17 +44,11 @@
             this.grigliaRichieste = new System.Windows.Forms.DataGridView();
             this.bnCOMANDI = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-            this.btnMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-            this.btnMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
             this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnMoveNextItem = new System.Windows.Forms.ToolStripButton();
-            this.btnMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnABILITAZIONI = new System.Windows.Forms.ToolStripButton();
-            this.btn_STAMPA_DATI = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
@@ -62,25 +56,36 @@
             this.txtRicerca = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.pbLogo_Wait = new System.Windows.Forms.PictureBox();
             this.btnCestino = new System.Windows.Forms.Button();
             this.lblINFO = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnEXIT = new System.Windows.Forms.ToolStripMenuItem();
             this.variazioniRosterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnAllineaDB = new System.Windows.Forms.ToolStripMenuItem();
             this.ricaricaDatiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkMostraSoloRichieste = new System.Windows.Forms.CheckBox();
             this.txtDataA = new System.Windows.Forms.DateTimePicker();
-            this.btnFiltra = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnSelTutti = new System.Windows.Forms.Button();
+            this.btnAttesaSel = new System.Windows.Forms.Button();
+            this.btnRifiutaSel = new System.Windows.Forms.Button();
+            this.btnApprovaSel = new System.Windows.Forms.Button();
+            this.btnFiltra = new System.Windows.Forms.Button();
+            this.pbLogo_Wait = new System.Windows.Forms.PictureBox();
+            this.btnMoveFirstItem = new System.Windows.Forms.ToolStripButton();
+            this.btnMovePreviousItem = new System.Windows.Forms.ToolStripButton();
+            this.btnMoveNextItem = new System.Windows.Forms.ToolStripButton();
+            this.btnMoveLastItem = new System.Windows.Forms.ToolStripButton();
+            this.btnABILITAZIONI = new System.Windows.Forms.ToolStripButton();
+            this.btn_STAMPA_DATI = new System.Windows.Forms.ToolStripButton();
+            this.btnRicercaAvanzata = new System.Windows.Forms.ToolStripButton();
+            this.btnEXIT = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAllineaDB = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bnCOMANDI)).BeginInit();
             this.bnCOMANDI.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLogo_Wait)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo_Wait)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenu
@@ -161,6 +166,7 @@
             // 
             this.grigliaRichieste.AllowUserToAddRows = false;
             this.grigliaRichieste.AllowUserToDeleteRows = false;
+            this.grigliaRichieste.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Ivory;
             this.grigliaRichieste.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.grigliaRichieste.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -168,15 +174,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grigliaRichieste.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grigliaRichieste.ContextMenuStrip = this.contextMenu;
-            this.grigliaRichieste.Location = new System.Drawing.Point(3, 124);
+            this.grigliaRichieste.Location = new System.Drawing.Point(3, 151);
             this.grigliaRichieste.MultiSelect = false;
             this.grigliaRichieste.Name = "grigliaRichieste";
-            this.grigliaRichieste.ReadOnly = true;
             this.grigliaRichieste.RowHeadersVisible = false;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grigliaRichieste.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.grigliaRichieste.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grigliaRichieste.Size = new System.Drawing.Size(1247, 594);
+            this.grigliaRichieste.Size = new System.Drawing.Size(1247, 567);
             this.grigliaRichieste.TabIndex = 8;
             // 
             // bnCOMANDI
@@ -205,6 +210,7 @@
             this.toolStripSeparator4,
             this.toolStripLabel1,
             this.txtRicerca,
+            this.btnRicercaAvanzata,
             this.toolStripSeparator5,
             this.toolStripSeparator6});
             this.bnCOMANDI.Location = new System.Drawing.Point(0, 24);
@@ -224,26 +230,6 @@
             this.bindingNavigatorCountItem.Size = new System.Drawing.Size(63, 48);
             this.bindingNavigatorCountItem.Text = "di {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Numero totale di elementi";
-            // 
-            // btnMoveFirstItem
-            // 
-            this.btnMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveFirstItem.Image")));
-            this.btnMoveFirstItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnMoveFirstItem.Name = "btnMoveFirstItem";
-            this.btnMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.btnMoveFirstItem.Size = new System.Drawing.Size(36, 48);
-            this.btnMoveFirstItem.Text = "Sposta in prima posizione";
-            // 
-            // btnMovePreviousItem
-            // 
-            this.btnMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMovePreviousItem.Image")));
-            this.btnMovePreviousItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnMovePreviousItem.Name = "btnMovePreviousItem";
-            this.btnMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.btnMovePreviousItem.Size = new System.Drawing.Size(36, 48);
-            this.btnMovePreviousItem.Text = "Sposta indietro";
             // 
             // bindingNavigatorSeparator
             // 
@@ -265,26 +251,6 @@
             this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
             this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 51);
             // 
-            // btnMoveNextItem
-            // 
-            this.btnMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveNextItem.Image")));
-            this.btnMoveNextItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnMoveNextItem.Name = "btnMoveNextItem";
-            this.btnMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.btnMoveNextItem.Size = new System.Drawing.Size(36, 48);
-            this.btnMoveNextItem.Text = "Sposta avanti";
-            // 
-            // btnMoveLastItem
-            // 
-            this.btnMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveLastItem.Image")));
-            this.btnMoveLastItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnMoveLastItem.Name = "btnMoveLastItem";
-            this.btnMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.btnMoveLastItem.Size = new System.Drawing.Size(36, 48);
-            this.btnMoveLastItem.Text = "Sposta in ultima posizione";
-            // 
             // bindingNavigatorSeparator2
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
@@ -294,30 +260,6 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 51);
-            // 
-            // btnABILITAZIONI
-            // 
-            this.btnABILITAZIONI.AutoSize = false;
-            this.btnABILITAZIONI.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnABILITAZIONI.Image = ((System.Drawing.Image)(resources.GetObject("btnABILITAZIONI.Image")));
-            this.btnABILITAZIONI.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnABILITAZIONI.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnABILITAZIONI.Name = "btnABILITAZIONI";
-            this.btnABILITAZIONI.Size = new System.Drawing.Size(40, 40);
-            this.btnABILITAZIONI.ToolTipText = "Gestione abilitazioni utenti(F2)";
-            this.btnABILITAZIONI.Click += new System.EventHandler(this.btnVARIAZIONI_USERLIST_Click);
-            // 
-            // btn_STAMPA_DATI
-            // 
-            this.btn_STAMPA_DATI.AutoSize = false;
-            this.btn_STAMPA_DATI.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_STAMPA_DATI.Image = ((System.Drawing.Image)(resources.GetObject("btn_STAMPA_DATI.Image")));
-            this.btn_STAMPA_DATI.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btn_STAMPA_DATI.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_STAMPA_DATI.Name = "btn_STAMPA_DATI";
-            this.btn_STAMPA_DATI.Size = new System.Drawing.Size(40, 40);
-            this.btn_STAMPA_DATI.ToolTipText = "Stampa dati(F7)";
-            this.btn_STAMPA_DATI.Click += new System.EventHandler(this.btnStampa_Click);
             // 
             // toolStripLabel2
             // 
@@ -358,18 +300,6 @@
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(6, 51);
-            // 
-            // pbLogo_Wait
-            // 
-            this.pbLogo_Wait.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbLogo_Wait.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.pbLogo_Wait.Image = global::ASRIP.Properties.Resources.NewLogoANM;
-            this.pbLogo_Wait.Location = new System.Drawing.Point(1118, 24);
-            this.pbLogo_Wait.Name = "pbLogo_Wait";
-            this.pbLogo_Wait.Size = new System.Drawing.Size(132, 51);
-            this.pbLogo_Wait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbLogo_Wait.TabIndex = 156;
-            this.pbLogo_Wait.TabStop = false;
             // 
             // btnCestino
             // 
@@ -415,14 +345,6 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // btnEXIT
-            // 
-            this.btnEXIT.Image = ((System.Drawing.Image)(resources.GetObject("btnEXIT.Image")));
-            this.btnEXIT.Name = "btnEXIT";
-            this.btnEXIT.Size = new System.Drawing.Size(93, 22);
-            this.btnEXIT.Text = "Exit";
-            this.btnEXIT.Click += new System.EventHandler(this.btnEXIT_Click);
-            // 
             // variazioniRosterToolStripMenuItem
             // 
             this.variazioniRosterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -432,25 +354,17 @@
             this.variazioniRosterToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
             this.variazioniRosterToolStripMenuItem.Text = "Variazioni roster";
             // 
-            // btnAllineaDB
-            // 
-            this.btnAllineaDB.Image = ((System.Drawing.Image)(resources.GetObject("btnAllineaDB.Image")));
-            this.btnAllineaDB.Name = "btnAllineaDB";
-            this.btnAllineaDB.Size = new System.Drawing.Size(180, 22);
-            this.btnAllineaDB.Text = "Allinea database";
-            this.btnAllineaDB.Click += new System.EventHandler(this.btnAllineaDB_Click);
-            // 
             // ricaricaDatiToolStripMenuItem
             // 
             this.ricaricaDatiToolStripMenuItem.Name = "ricaricaDatiToolStripMenuItem";
-            this.ricaricaDatiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ricaricaDatiToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.ricaricaDatiToolStripMenuItem.Text = "Ricarica dati";
             this.ricaricaDatiToolStripMenuItem.Click += new System.EventHandler(this.ricaricaDatiToolStripMenuItem_Click);
             // 
             // chkMostraSoloRichieste
             // 
             this.chkMostraSoloRichieste.AutoSize = true;
-            this.chkMostraSoloRichieste.Location = new System.Drawing.Point(808, 78);
+            this.chkMostraSoloRichieste.Location = new System.Drawing.Point(450, 78);
             this.chkMostraSoloRichieste.Name = "chkMostraSoloRichieste";
             this.chkMostraSoloRichieste.Size = new System.Drawing.Size(173, 19);
             this.chkMostraSoloRichieste.TabIndex = 159;
@@ -469,16 +383,6 @@
             this.txtDataA.TabIndex = 160;
             this.txtDataA.ValueChanged += new System.EventHandler(this.txtDataA_ValueChanged);
             // 
-            // btnFiltra
-            // 
-            this.btnFiltra.Location = new System.Drawing.Point(379, 78);
-            this.btnFiltra.Name = "btnFiltra";
-            this.btnFiltra.Size = new System.Drawing.Size(46, 30);
-            this.btnFiltra.TabIndex = 161;
-            this.btnFiltra.Text = "Filtra";
-            this.btnFiltra.UseVisualStyleBackColor = true;
-            this.btnFiltra.Click += new System.EventHandler(this.btnFiltra_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -488,11 +392,182 @@
             this.label1.TabIndex = 162;
             this.label1.Text = "Range Date";
             // 
+            // btnSelTutti
+            // 
+            this.btnSelTutti.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelTutti.Image = global::ASRIP.Properties.Resources.format_list_unordered;
+            this.btnSelTutti.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSelTutti.Location = new System.Drawing.Point(3, 115);
+            this.btnSelTutti.Name = "btnSelTutti";
+            this.btnSelTutti.Size = new System.Drawing.Size(32, 30);
+            this.btnSelTutti.TabIndex = 166;
+            this.btnSelTutti.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSelTutti.UseVisualStyleBackColor = true;
+            this.btnSelTutti.Click += new System.EventHandler(this.btnSelTutti_Click);
+            // 
+            // btnAttesaSel
+            // 
+            this.btnAttesaSel.Enabled = false;
+            this.btnAttesaSel.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAttesaSel.Image = global::ASRIP.Properties.Resources.flag_yellow;
+            this.btnAttesaSel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAttesaSel.Location = new System.Drawing.Point(229, 114);
+            this.btnAttesaSel.Name = "btnAttesaSel";
+            this.btnAttesaSel.Size = new System.Drawing.Size(103, 30);
+            this.btnAttesaSel.TabIndex = 165;
+            this.btnAttesaSel.Text = "Attesa Sel";
+            this.btnAttesaSel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAttesaSel.UseVisualStyleBackColor = true;
+            // 
+            // btnRifiutaSel
+            // 
+            this.btnRifiutaSel.Enabled = false;
+            this.btnRifiutaSel.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRifiutaSel.Image = global::ASRIP.Properties.Resources.flag_red;
+            this.btnRifiutaSel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRifiutaSel.Location = new System.Drawing.Point(338, 114);
+            this.btnRifiutaSel.Name = "btnRifiutaSel";
+            this.btnRifiutaSel.Size = new System.Drawing.Size(103, 30);
+            this.btnRifiutaSel.TabIndex = 164;
+            this.btnRifiutaSel.Text = "Approva Sel";
+            this.btnRifiutaSel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRifiutaSel.UseVisualStyleBackColor = true;
+            // 
+            // btnApprovaSel
+            // 
+            this.btnApprovaSel.Enabled = false;
+            this.btnApprovaSel.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnApprovaSel.Image = global::ASRIP.Properties.Resources.flag_green;
+            this.btnApprovaSel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnApprovaSel.Location = new System.Drawing.Point(120, 114);
+            this.btnApprovaSel.Name = "btnApprovaSel";
+            this.btnApprovaSel.Size = new System.Drawing.Size(103, 30);
+            this.btnApprovaSel.TabIndex = 163;
+            this.btnApprovaSel.Text = "Approva Sel";
+            this.btnApprovaSel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnApprovaSel.UseVisualStyleBackColor = true;
+            // 
+            // btnFiltra
+            // 
+            this.btnFiltra.Image = global::ASRIP.Properties.Resources.system_search;
+            this.btnFiltra.Location = new System.Drawing.Point(379, 78);
+            this.btnFiltra.Name = "btnFiltra";
+            this.btnFiltra.Size = new System.Drawing.Size(46, 30);
+            this.btnFiltra.TabIndex = 161;
+            this.btnFiltra.UseVisualStyleBackColor = true;
+            this.btnFiltra.Click += new System.EventHandler(this.btnFiltra_Click);
+            // 
+            // pbLogo_Wait
+            // 
+            this.pbLogo_Wait.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbLogo_Wait.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.pbLogo_Wait.Image = global::ASRIP.Properties.Resources.NewLogoANM;
+            this.pbLogo_Wait.Location = new System.Drawing.Point(1118, 24);
+            this.pbLogo_Wait.Name = "pbLogo_Wait";
+            this.pbLogo_Wait.Size = new System.Drawing.Size(132, 51);
+            this.pbLogo_Wait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbLogo_Wait.TabIndex = 156;
+            this.pbLogo_Wait.TabStop = false;
+            // 
+            // btnMoveFirstItem
+            // 
+            this.btnMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveFirstItem.Image")));
+            this.btnMoveFirstItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnMoveFirstItem.Name = "btnMoveFirstItem";
+            this.btnMoveFirstItem.RightToLeftAutoMirrorImage = true;
+            this.btnMoveFirstItem.Size = new System.Drawing.Size(36, 48);
+            this.btnMoveFirstItem.Text = "Sposta in prima posizione";
+            // 
+            // btnMovePreviousItem
+            // 
+            this.btnMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMovePreviousItem.Image")));
+            this.btnMovePreviousItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnMovePreviousItem.Name = "btnMovePreviousItem";
+            this.btnMovePreviousItem.RightToLeftAutoMirrorImage = true;
+            this.btnMovePreviousItem.Size = new System.Drawing.Size(36, 48);
+            this.btnMovePreviousItem.Text = "Sposta indietro";
+            // 
+            // btnMoveNextItem
+            // 
+            this.btnMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveNextItem.Image")));
+            this.btnMoveNextItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnMoveNextItem.Name = "btnMoveNextItem";
+            this.btnMoveNextItem.RightToLeftAutoMirrorImage = true;
+            this.btnMoveNextItem.Size = new System.Drawing.Size(36, 48);
+            this.btnMoveNextItem.Text = "Sposta avanti";
+            // 
+            // btnMoveLastItem
+            // 
+            this.btnMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveLastItem.Image")));
+            this.btnMoveLastItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnMoveLastItem.Name = "btnMoveLastItem";
+            this.btnMoveLastItem.RightToLeftAutoMirrorImage = true;
+            this.btnMoveLastItem.Size = new System.Drawing.Size(36, 48);
+            this.btnMoveLastItem.Text = "Sposta in ultima posizione";
+            // 
+            // btnABILITAZIONI
+            // 
+            this.btnABILITAZIONI.AutoSize = false;
+            this.btnABILITAZIONI.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnABILITAZIONI.Image = ((System.Drawing.Image)(resources.GetObject("btnABILITAZIONI.Image")));
+            this.btnABILITAZIONI.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnABILITAZIONI.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnABILITAZIONI.Name = "btnABILITAZIONI";
+            this.btnABILITAZIONI.Size = new System.Drawing.Size(40, 40);
+            this.btnABILITAZIONI.ToolTipText = "Gestione abilitazioni utenti(F2)";
+            this.btnABILITAZIONI.Click += new System.EventHandler(this.btnVARIAZIONI_USERLIST_Click);
+            // 
+            // btn_STAMPA_DATI
+            // 
+            this.btn_STAMPA_DATI.AutoSize = false;
+            this.btn_STAMPA_DATI.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_STAMPA_DATI.Image = ((System.Drawing.Image)(resources.GetObject("btn_STAMPA_DATI.Image")));
+            this.btn_STAMPA_DATI.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btn_STAMPA_DATI.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_STAMPA_DATI.Name = "btn_STAMPA_DATI";
+            this.btn_STAMPA_DATI.Size = new System.Drawing.Size(40, 40);
+            this.btn_STAMPA_DATI.ToolTipText = "Stampa dati(F7)";
+            this.btn_STAMPA_DATI.Click += new System.EventHandler(this.btnStampa_Click);
+            // 
+            // btnRicercaAvanzata
+            // 
+            this.btnRicercaAvanzata.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRicercaAvanzata.Image = global::ASRIP.Properties.Resources.list_add;
+            this.btnRicercaAvanzata.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRicercaAvanzata.Name = "btnRicercaAvanzata";
+            this.btnRicercaAvanzata.Size = new System.Drawing.Size(23, 48);
+            this.btnRicercaAvanzata.Text = "toolStripButton1";
+            this.btnRicercaAvanzata.Click += new System.EventHandler(this.btnRicercaAvanzata_Click);
+            // 
+            // btnEXIT
+            // 
+            this.btnEXIT.Image = ((System.Drawing.Image)(resources.GetObject("btnEXIT.Image")));
+            this.btnEXIT.Name = "btnEXIT";
+            this.btnEXIT.Size = new System.Drawing.Size(93, 22);
+            this.btnEXIT.Text = "Exit";
+            this.btnEXIT.Click += new System.EventHandler(this.btnEXIT_Click);
+            // 
+            // btnAllineaDB
+            // 
+            this.btnAllineaDB.Image = ((System.Drawing.Image)(resources.GetObject("btnAllineaDB.Image")));
+            this.btnAllineaDB.Name = "btnAllineaDB";
+            this.btnAllineaDB.Size = new System.Drawing.Size(160, 22);
+            this.btnAllineaDB.Text = "Allinea database";
+            this.btnAllineaDB.Click += new System.EventHandler(this.btnAllineaDB_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1254, 739);
+            this.Controls.Add(this.btnSelTutti);
+            this.Controls.Add(this.btnAttesaSel);
+            this.Controls.Add(this.btnRifiutaSel);
+            this.Controls.Add(this.btnApprovaSel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnFiltra);
             this.Controls.Add(this.txtDataA);
@@ -520,9 +595,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.bnCOMANDI)).EndInit();
             this.bnCOMANDI.ResumeLayout(false);
             this.bnCOMANDI.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbLogo_Wait)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogo_Wait)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -572,6 +647,11 @@
         private System.Windows.Forms.DateTimePicker txtDataA;
         private System.Windows.Forms.Button btnFiltra;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnApprovaSel;
+        private System.Windows.Forms.Button btnRifiutaSel;
+        private System.Windows.Forms.Button btnAttesaSel;
+        private System.Windows.Forms.Button btnSelTutti;
+        private System.Windows.Forms.ToolStripButton btnRicercaAvanzata;
     }
 }
 

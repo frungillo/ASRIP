@@ -123,6 +123,12 @@
     <Compile Include="Form4.Designer.cs">
       <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmRicercaAvanzata.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRicercaAvanzata.Designer.cs">
+      <DependentUpon>frmRicercaAvanzata.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmStato.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -143,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form4.resx">
       <DependentUpon>Form4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRicercaAvanzata.resx">
+      <DependentUpon>frmRicercaAvanzata.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmStato.resx">
       <DependentUpon>frmStato.cs</DependentUpon>
@@ -176,6 +185,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="accessories-text-editor.ico" />
+    <None Include="Resources\list-add.png" />
+    <None Include="Resources\list-add-font-2.png" />
+    <None Include="Resources\format-list-unordered.png" />
+    <None Include="Resources\flag-red.png" />
+    <None Include="Resources\flag-green.png" />
+    <None Include="Resources\flag-yellow.png" />
+    <None Include="Resources\dialog-ok-3.png" />
+    <None Include="Resources\system-search.png" />
+    <None Include="Resources\filter1.png" />
+    <None Include="Resources\filter.png" />
     <None Include="Resources\NewLogoANM.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
