@@ -13,7 +13,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Deployment.Application;
 using System.Reflection;
-
+using System.Threading;
 
 namespace ASRIP
 {
@@ -31,12 +31,7 @@ namespace ASRIP
 
         
 
-    static void SetDoubleBuffer(Control dgv, bool DoubleBuffered)
-    {
-        typeof(Control).InvokeMember("DoubleBuffered",
-            BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.SetProperty,
-            null, dgv, new object[] { DoubleBuffered });
-    }
+ 
 
     private void coloraRIGHE()
         {
@@ -71,8 +66,16 @@ namespace ASRIP
                 }
             }
         }
+       
         private void compilaGriglia()
         {
+            TimeSpan ts = txtDataA.Value.Subtract(txtDataDa.Value);
+            if(ts.Days > 40)
+            {
+                if (MessageBox.Show("Attenzione elaborazioni superiori a 40 giorni " +
+                    "potrebbero richiedere molto tempo, durante il quale il programma potrebbe sebrare 'bloccato'. " +
+                    "Sei sicuro di procedere?", "AVVISO", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            }
             grigliaRichieste.DataSource = null;
             grigliaRichieste.Rows.Clear();
             grigliaRichieste.Columns.Clear();
@@ -97,7 +100,7 @@ namespace ASRIP
                 A.VARIAZIONI_UTENTE as UTENTE, 
                 LOWER(A.VARIAZIONI_NOTE) as NOTE, 
                 A.VARIAZIONI_NUM_PROTOCOLLO as PROTOCOLLO";
-            if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO as Data_Comun";
+            if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO as Data_Comun"; else { sql += " ,'ND' as Data_Comun"; }
             sql += $@" FROM {currentSate} A WHERE TRIM(A.VARIAZIONI_CODICE_BDROP) IN ({_richieste}) 
             and A.variazioni_da_data between to_date('{txtDataDa.Value.ToShortDateString()}','dd/mm/yyyy') and to_date('{txtDataA.Value.ToShortDateString()}','dd/mm/yyyy')
             and
@@ -113,8 +116,9 @@ namespace ASRIP
             dt = db.getDataTable(sql);
             
             _bs.DataSource = dt;
+            
             bnCOMANDI.BindingSource = _bs;
-            SetDoubleBuffer(grigliaRichieste, true);
+            commons.SetDoubleBuffer(grigliaRichieste, true);
             grigliaRichieste.DataSource = _bs;
            
             db.Dispose();
@@ -130,7 +134,7 @@ namespace ASRIP
             grigliaRichieste.Columns[3].Width = 250; //nome
             grigliaRichieste.Columns[4].Width = 90; //dep
             grigliaRichieste.Columns[5].Width = 60; //lin
-           
+
             grigliaRichieste.Columns[6].Width = 60; // monto
             grigliaRichieste.Columns[7].Width = 60; // scambia
             grigliaRichieste.Columns[8].Width = 20; // cons
@@ -139,6 +143,7 @@ namespace ASRIP
             grigliaRichieste.Columns[11].Width = 60;
             grigliaRichieste.Columns[12].Width = 120;
             grigliaRichieste.Columns[13].Width = 30;
+         
 
         }
         private bool checkAut()
@@ -356,32 +361,20 @@ namespace ASRIP
                 MessageBox.Show("GrigliaRichieste_CellDoubleClick: " + exc.Message, "Attenzione");
             }
         }
-     
+
+        private string _filtroRicerca="";
+        
         private void TxtRicerca_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                string sql = @"CODICE like'*{0}*'  or NOMINATIVO like '*{0}*' or NOTE like '*{0}*' or DEPOSITO like '*{0}*'";
-                if (txtRicerca.Text.StartsWith("?"))
-                {
-                    if (txtRicerca.Text.EndsWith("?"))
-                    {
-                        try
-                        {
-                            _bs.Filter = txtRicerca.Text.Replace("?", "");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Errore:" + ex.Message, "Errore QRY", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                    }
-                    return;
-                }
 
-                if (txtRicerca.Text.Length >= 2)
+                string sql = $@"CODICE like'*{txtRicerca.Text.Replace("'", "''")}*'  or NOMINATIVO like '*{txtRicerca.Text.Replace("'", "''")}*' or NOTE like '*{txtRicerca.Text.Replace("'", "''")}*' or DEPOSITO like '*{txtRicerca.Text.Replace("'", "''")}*'";
+                if (_filtroRicerca != "") sql = _filtroRicerca;
+
+                if (txtRicerca.Text.Length >= 2 || _filtroRicerca != "")
                 {
-                    _bs.Filter = string.Format(sql, txtRicerca.Text);
+                    _bs.Filter =sql;
                 }
                 else _bs.RemoveFilter();
                 coloraRIGHE();
@@ -390,6 +383,7 @@ namespace ASRIP
             {
                 MessageBox.Show("TxtRicerca_TextChanged: " + exc.Message, "Attenzione");
             }
+            _filtroRicerca = "";
             
         }
         private void BtnCestino_Click(object sender, EventArgs e)
@@ -583,9 +577,24 @@ namespace ASRIP
 
         private void btnRicercaAvanzata_Click(object sender, EventArgs e)
         {
+            txtRicerca.Text = "";
             frmRicercaAvanzata frm = new frmRicercaAvanzata(grigliaRichieste);
             frm.StartPosition = FormStartPosition.CenterParent;
             frm.ShowDialog(this);
+            if (frm.filtro != "") _filtroRicerca = frm.filtro;
+            TxtRicerca_TextChanged(null, null);
+            
+        }
+
+        private void RichiestetoolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            /**/
+            string matricola = txtUtenteSel.Text.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[0].Trim();
+            frmInfoRichieste frm = new frmInfoRichieste(matricola);
+            frm.StartPosition = FormStartPosition.CenterParent;
+            frm.ShowDialog(this);
+
+            
         }
 
         private void contextMenu_Opening(object sender, CancelEventArgs e)

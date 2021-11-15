@@ -44,23 +44,32 @@
             this.grigliaRichieste = new System.Windows.Forms.DataGridView();
             this.bnCOMANDI = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
+            this.btnMoveFirstItem = new System.Windows.Forms.ToolStripButton();
+            this.btnMovePreviousItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
             this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMoveNextItem = new System.Windows.Forms.ToolStripButton();
+            this.btnMoveLastItem = new System.Windows.Forms.ToolStripButton();
             this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnABILITAZIONI = new System.Windows.Forms.ToolStripButton();
+            this.btn_STAMPA_DATI = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.txtRicerca = new System.Windows.Forms.ToolStripTextBox();
+            this.btnRicercaAvanzata = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.btnCestino = new System.Windows.Forms.Button();
             this.lblINFO = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnEXIT = new System.Windows.Forms.ToolStripMenuItem();
             this.variazioniRosterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAllineaDB = new System.Windows.Forms.ToolStripMenuItem();
             this.ricaricaDatiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chkMostraSoloRichieste = new System.Windows.Forms.CheckBox();
             this.txtDataA = new System.Windows.Forms.DateTimePicker();
@@ -71,15 +80,6 @@
             this.btnApprovaSel = new System.Windows.Forms.Button();
             this.btnFiltra = new System.Windows.Forms.Button();
             this.pbLogo_Wait = new System.Windows.Forms.PictureBox();
-            this.btnMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-            this.btnMovePreviousItem = new System.Windows.Forms.ToolStripButton();
-            this.btnMoveNextItem = new System.Windows.Forms.ToolStripButton();
-            this.btnMoveLastItem = new System.Windows.Forms.ToolStripButton();
-            this.btnABILITAZIONI = new System.Windows.Forms.ToolStripButton();
-            this.btn_STAMPA_DATI = new System.Windows.Forms.ToolStripButton();
-            this.btnRicercaAvanzata = new System.Windows.Forms.ToolStripButton();
-            this.btnEXIT = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnAllineaDB = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bnCOMANDI)).BeginInit();
@@ -138,6 +138,7 @@
             this.RichiestetoolStripMenuItem1.Name = "RichiestetoolStripMenuItem1";
             this.RichiestetoolStripMenuItem1.Size = new System.Drawing.Size(260, 22);
             this.RichiestetoolStripMenuItem1.Text = "Info Richieste";
+            this.RichiestetoolStripMenuItem1.Click += new System.EventHandler(this.RichiestetoolStripMenuItem1_Click);
             // 
             // btnCaricaVariazioni
             // 
@@ -159,7 +160,7 @@
             this.txtDataDa.Location = new System.Drawing.Point(79, 78);
             this.txtDataDa.Name = "txtDataDa";
             this.txtDataDa.Size = new System.Drawing.Size(144, 30);
-            this.txtDataDa.TabIndex = 10;
+            this.txtDataDa.TabIndex = 1;
             this.txtDataDa.ValueChanged += new System.EventHandler(this.txtDataDa_ValueChanged);
             // 
             // grigliaRichieste
@@ -231,6 +232,26 @@
             this.bindingNavigatorCountItem.Text = "di {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Numero totale di elementi";
             // 
+            // btnMoveFirstItem
+            // 
+            this.btnMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveFirstItem.Image")));
+            this.btnMoveFirstItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnMoveFirstItem.Name = "btnMoveFirstItem";
+            this.btnMoveFirstItem.RightToLeftAutoMirrorImage = true;
+            this.btnMoveFirstItem.Size = new System.Drawing.Size(36, 48);
+            this.btnMoveFirstItem.Text = "Sposta in prima posizione";
+            // 
+            // btnMovePreviousItem
+            // 
+            this.btnMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMovePreviousItem.Image")));
+            this.btnMovePreviousItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnMovePreviousItem.Name = "btnMovePreviousItem";
+            this.btnMovePreviousItem.RightToLeftAutoMirrorImage = true;
+            this.btnMovePreviousItem.Size = new System.Drawing.Size(36, 48);
+            this.btnMovePreviousItem.Text = "Sposta indietro";
+            // 
             // bindingNavigatorSeparator
             // 
             this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
@@ -251,6 +272,26 @@
             this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
             this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 51);
             // 
+            // btnMoveNextItem
+            // 
+            this.btnMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveNextItem.Image")));
+            this.btnMoveNextItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnMoveNextItem.Name = "btnMoveNextItem";
+            this.btnMoveNextItem.RightToLeftAutoMirrorImage = true;
+            this.btnMoveNextItem.Size = new System.Drawing.Size(36, 48);
+            this.btnMoveNextItem.Text = "Sposta avanti";
+            // 
+            // btnMoveLastItem
+            // 
+            this.btnMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveLastItem.Image")));
+            this.btnMoveLastItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnMoveLastItem.Name = "btnMoveLastItem";
+            this.btnMoveLastItem.RightToLeftAutoMirrorImage = true;
+            this.btnMoveLastItem.Size = new System.Drawing.Size(36, 48);
+            this.btnMoveLastItem.Text = "Sposta in ultima posizione";
+            // 
             // bindingNavigatorSeparator2
             // 
             this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
@@ -260,6 +301,30 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 51);
+            // 
+            // btnABILITAZIONI
+            // 
+            this.btnABILITAZIONI.AutoSize = false;
+            this.btnABILITAZIONI.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnABILITAZIONI.Image = ((System.Drawing.Image)(resources.GetObject("btnABILITAZIONI.Image")));
+            this.btnABILITAZIONI.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btnABILITAZIONI.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnABILITAZIONI.Name = "btnABILITAZIONI";
+            this.btnABILITAZIONI.Size = new System.Drawing.Size(40, 40);
+            this.btnABILITAZIONI.ToolTipText = "Gestione abilitazioni utenti(F2)";
+            this.btnABILITAZIONI.Click += new System.EventHandler(this.btnVARIAZIONI_USERLIST_Click);
+            // 
+            // btn_STAMPA_DATI
+            // 
+            this.btn_STAMPA_DATI.AutoSize = false;
+            this.btn_STAMPA_DATI.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn_STAMPA_DATI.Image = ((System.Drawing.Image)(resources.GetObject("btn_STAMPA_DATI.Image")));
+            this.btn_STAMPA_DATI.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.btn_STAMPA_DATI.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn_STAMPA_DATI.Name = "btn_STAMPA_DATI";
+            this.btn_STAMPA_DATI.Size = new System.Drawing.Size(40, 40);
+            this.btn_STAMPA_DATI.ToolTipText = "Stampa dati(F7)";
+            this.btn_STAMPA_DATI.Click += new System.EventHandler(this.btnStampa_Click);
             // 
             // toolStripLabel2
             // 
@@ -290,6 +355,16 @@
             this.txtRicerca.Name = "txtRicerca";
             this.txtRicerca.Size = new System.Drawing.Size(300, 51);
             this.txtRicerca.TextChanged += new System.EventHandler(this.TxtRicerca_TextChanged);
+            // 
+            // btnRicercaAvanzata
+            // 
+            this.btnRicercaAvanzata.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnRicercaAvanzata.Image = global::ASRIP.Properties.Resources.list_add;
+            this.btnRicercaAvanzata.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRicercaAvanzata.Name = "btnRicercaAvanzata";
+            this.btnRicercaAvanzata.Size = new System.Drawing.Size(23, 48);
+            this.btnRicercaAvanzata.Text = "toolStripButton1";
+            this.btnRicercaAvanzata.Click += new System.EventHandler(this.btnRicercaAvanzata_Click);
             // 
             // toolStripSeparator5
             // 
@@ -345,6 +420,14 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // btnEXIT
+            // 
+            this.btnEXIT.Image = ((System.Drawing.Image)(resources.GetObject("btnEXIT.Image")));
+            this.btnEXIT.Name = "btnEXIT";
+            this.btnEXIT.Size = new System.Drawing.Size(93, 22);
+            this.btnEXIT.Text = "Exit";
+            this.btnEXIT.Click += new System.EventHandler(this.btnEXIT_Click);
+            // 
             // variazioniRosterToolStripMenuItem
             // 
             this.variazioniRosterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -353,6 +436,14 @@
             this.variazioniRosterToolStripMenuItem.Name = "variazioniRosterToolStripMenuItem";
             this.variazioniRosterToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
             this.variazioniRosterToolStripMenuItem.Text = "Variazioni roster";
+            // 
+            // btnAllineaDB
+            // 
+            this.btnAllineaDB.Image = ((System.Drawing.Image)(resources.GetObject("btnAllineaDB.Image")));
+            this.btnAllineaDB.Name = "btnAllineaDB";
+            this.btnAllineaDB.Size = new System.Drawing.Size(160, 22);
+            this.btnAllineaDB.Text = "Allinea database";
+            this.btnAllineaDB.Click += new System.EventHandler(this.btnAllineaDB_Click);
             // 
             // ricaricaDatiToolStripMenuItem
             // 
@@ -380,7 +471,7 @@
             this.txtDataA.Location = new System.Drawing.Point(229, 78);
             this.txtDataA.Name = "txtDataA";
             this.txtDataA.Size = new System.Drawing.Size(144, 30);
-            this.txtDataA.TabIndex = 160;
+            this.txtDataA.TabIndex = 2;
             this.txtDataA.ValueChanged += new System.EventHandler(this.txtDataA_ValueChanged);
             // 
             // label1
@@ -468,96 +559,6 @@
             this.pbLogo_Wait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbLogo_Wait.TabIndex = 156;
             this.pbLogo_Wait.TabStop = false;
-            // 
-            // btnMoveFirstItem
-            // 
-            this.btnMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveFirstItem.Image")));
-            this.btnMoveFirstItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnMoveFirstItem.Name = "btnMoveFirstItem";
-            this.btnMoveFirstItem.RightToLeftAutoMirrorImage = true;
-            this.btnMoveFirstItem.Size = new System.Drawing.Size(36, 48);
-            this.btnMoveFirstItem.Text = "Sposta in prima posizione";
-            // 
-            // btnMovePreviousItem
-            // 
-            this.btnMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMovePreviousItem.Image")));
-            this.btnMovePreviousItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnMovePreviousItem.Name = "btnMovePreviousItem";
-            this.btnMovePreviousItem.RightToLeftAutoMirrorImage = true;
-            this.btnMovePreviousItem.Size = new System.Drawing.Size(36, 48);
-            this.btnMovePreviousItem.Text = "Sposta indietro";
-            // 
-            // btnMoveNextItem
-            // 
-            this.btnMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveNextItem.Image")));
-            this.btnMoveNextItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnMoveNextItem.Name = "btnMoveNextItem";
-            this.btnMoveNextItem.RightToLeftAutoMirrorImage = true;
-            this.btnMoveNextItem.Size = new System.Drawing.Size(36, 48);
-            this.btnMoveNextItem.Text = "Sposta avanti";
-            // 
-            // btnMoveLastItem
-            // 
-            this.btnMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("btnMoveLastItem.Image")));
-            this.btnMoveLastItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnMoveLastItem.Name = "btnMoveLastItem";
-            this.btnMoveLastItem.RightToLeftAutoMirrorImage = true;
-            this.btnMoveLastItem.Size = new System.Drawing.Size(36, 48);
-            this.btnMoveLastItem.Text = "Sposta in ultima posizione";
-            // 
-            // btnABILITAZIONI
-            // 
-            this.btnABILITAZIONI.AutoSize = false;
-            this.btnABILITAZIONI.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnABILITAZIONI.Image = ((System.Drawing.Image)(resources.GetObject("btnABILITAZIONI.Image")));
-            this.btnABILITAZIONI.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btnABILITAZIONI.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnABILITAZIONI.Name = "btnABILITAZIONI";
-            this.btnABILITAZIONI.Size = new System.Drawing.Size(40, 40);
-            this.btnABILITAZIONI.ToolTipText = "Gestione abilitazioni utenti(F2)";
-            this.btnABILITAZIONI.Click += new System.EventHandler(this.btnVARIAZIONI_USERLIST_Click);
-            // 
-            // btn_STAMPA_DATI
-            // 
-            this.btn_STAMPA_DATI.AutoSize = false;
-            this.btn_STAMPA_DATI.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btn_STAMPA_DATI.Image = ((System.Drawing.Image)(resources.GetObject("btn_STAMPA_DATI.Image")));
-            this.btn_STAMPA_DATI.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.btn_STAMPA_DATI.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btn_STAMPA_DATI.Name = "btn_STAMPA_DATI";
-            this.btn_STAMPA_DATI.Size = new System.Drawing.Size(40, 40);
-            this.btn_STAMPA_DATI.ToolTipText = "Stampa dati(F7)";
-            this.btn_STAMPA_DATI.Click += new System.EventHandler(this.btnStampa_Click);
-            // 
-            // btnRicercaAvanzata
-            // 
-            this.btnRicercaAvanzata.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnRicercaAvanzata.Image = global::ASRIP.Properties.Resources.list_add;
-            this.btnRicercaAvanzata.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnRicercaAvanzata.Name = "btnRicercaAvanzata";
-            this.btnRicercaAvanzata.Size = new System.Drawing.Size(23, 48);
-            this.btnRicercaAvanzata.Text = "toolStripButton1";
-            this.btnRicercaAvanzata.Click += new System.EventHandler(this.btnRicercaAvanzata_Click);
-            // 
-            // btnEXIT
-            // 
-            this.btnEXIT.Image = ((System.Drawing.Image)(resources.GetObject("btnEXIT.Image")));
-            this.btnEXIT.Name = "btnEXIT";
-            this.btnEXIT.Size = new System.Drawing.Size(93, 22);
-            this.btnEXIT.Text = "Exit";
-            this.btnEXIT.Click += new System.EventHandler(this.btnEXIT_Click);
-            // 
-            // btnAllineaDB
-            // 
-            this.btnAllineaDB.Image = ((System.Drawing.Image)(resources.GetObject("btnAllineaDB.Image")));
-            this.btnAllineaDB.Name = "btnAllineaDB";
-            this.btnAllineaDB.Size = new System.Drawing.Size(160, 22);
-            this.btnAllineaDB.Text = "Allinea database";
-            this.btnAllineaDB.Click += new System.EventHandler(this.btnAllineaDB_Click);
             // 
             // Form1
             // 

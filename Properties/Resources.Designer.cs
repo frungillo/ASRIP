@@ -63,6 +63,16 @@ namespace ASRIP.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap application_exit_2 {
+            get {
+                object obj = ResourceManager.GetObject("application-exit-2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dialog_ok_3 {
             get {
                 object obj = ResourceManager.GetObject("dialog-ok-3", resourceCulture);
