@@ -94,9 +94,6 @@ namespace ASRIP
         {
             try
             {
-                string UTENTE_ULTIMA_MODIFICA = Environment.UserName;
-                string TERMINALE_ULTIMA_MODIFICA = Environment.MachineName;
-                string DATA_ULTIMA_MODIFICA = "to_date('" + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + "', 'dd/mm/yyyy HH24:MI')";
                 string StatoRichiesta = "";
                 switch (lstStato.SelectedIndex)
                 {
@@ -110,21 +107,9 @@ namespace ASRIP
                         StatoRichiesta = "A";
                         break;
                 }
-                string sql_log = $@"insert into malattie_log values(
-                            {DATA_ULTIMA_MODIFICA},
-                            '{UTENTE_ULTIMA_MODIFICA}',
-                            '{TERMINALE_ULTIMA_MODIFICA}',
-                            'Modifica stato richiesta {_numProtocollo}, nuovo stato={StatoRichiesta}', 'ASRIP')";
-                string sql_update = $@"update anm_vros_d_variazioni set VARIAZIONI_FLAG_CONSENSO='{StatoRichiesta}', 
-                                    variazioni_data_inserimento_up={DATA_ULTIMA_MODIFICA},
-                                    variazioni_utente_up = '{UTENTE_ULTIMA_MODIFICA}',
-                                    variazioni_terminale_up = '{TERMINALE_ULTIMA_MODIFICA}'
-                                    where VARIAZIONI_NUM_PROTOCOLLO = '{_numProtocollo}' ";
-
-                db db = new db();
-                db.exe(sql_log);
-                db.exe(sql_update);
-                db.Dispose();
+                commons.scriviLog($@"Modifica stato richiesta {_numProtocollo}, nuovo stato={StatoRichiesta}");
+                commons.alteraStatoRichiesta(StatoRichiesta, _numProtocollo);
+            
                 _reload = true;
                 this.Close();
             }

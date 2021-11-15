@@ -328,6 +328,7 @@ namespace ASRIP
                     {
                         grigliaRichieste.ClearSelection();
                         txtUtenteSel.Text = (string)grigliaRichieste[3, row.RowIndex].Value;
+                        txtProtocolloTT.Text = grigliaRichieste[11, row.RowIndex].Value.ToString();
                         grigliaRichieste.Rows[row.RowIndex].Selected = true;
                     }
                 }
@@ -589,12 +590,42 @@ namespace ASRIP
         private void RichiestetoolStripMenuItem1_Click(object sender, EventArgs e)
         {
             /**/
-            string matricola = txtUtenteSel.Text.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[0].Trim();
-            frmInfoRichieste frm = new frmInfoRichieste(matricola);
+            
+            frmInfoRichieste frm = new frmInfoRichieste(txtUtenteSel.Text);
             frm.StartPosition = FormStartPosition.CenterParent;
             frm.ShowDialog(this);
 
             
+        }
+
+        private void approvaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Approvo la richiesta?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                commons.scriviLog("Approvazione richiesta " + txtProtocolloTT.Text);
+                commons.alteraStatoRichiesta("S", txtProtocolloTT.Text);
+                compilaGriglia();
+            }
+        }
+
+        private void rifiutaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Rifiuto la richiesta?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                commons.scriviLog("Rifiuto richiesta " + txtProtocolloTT.Text);
+                commons.alteraStatoRichiesta("N", txtProtocolloTT.Text);
+                compilaGriglia();
+            }
+        }
+
+        private void attesaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Metto la richiesta in attesa?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                commons.scriviLog("Attesa richiesta " + txtProtocolloTT.Text);
+                commons.alteraStatoRichiesta("A", txtProtocolloTT.Text);
+                compilaGriglia();
+            }
         }
 
         private void contextMenu_Opening(object sender, CancelEventArgs e)
@@ -610,7 +641,7 @@ namespace ASRIP
                 else
                 {
                     dgvRIGA = grigliaRichieste.Rows[rowIndex];
-                    if (dgvRIGA.Cells[0].Value.ToString().Substring(0, 1) == "1")
+                    if (dgvRIGA.Cells[0].Value.ToString().Substring(0, 1) == "1" || dgvRIGA.Cells[0].Value.ToString().Substring(0, 1) == "4")
                     {
                         e.Cancel = true;
                         MessageBox.Show("Richiesta non soggetta ad alterazione dello stato", "Attenzione");

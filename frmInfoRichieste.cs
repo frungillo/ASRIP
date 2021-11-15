@@ -22,6 +22,8 @@ namespace ASRIP
         public frmInfoRichieste(string matricola)
         {
             InitializeComponent();
+            this.Text = "Richieste -30/+30 -- " + matricola;
+            matricola = matricola.Split(new string[] { "-" }, StringSplitOptions.RemoveEmptyEntries)[0].Trim();
             _matricola = matricola;
             this.Load += FrmInfoRichieste_Load;
 
@@ -36,6 +38,12 @@ namespace ASRIP
         private void GrigliaRichieste_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
         {
             /*tooltip*/
+            if (e.RowIndex >= 0 && e.ColumnIndex==0)
+            {
+                ttNote.Show(grigliaRichieste[4, e.RowIndex].Value.ToString(),this,
+                    grigliaRichieste.PointToClient(new Point(MousePosition.X+5, MousePosition.Y+20) ));
+             
+            }
         }
 
         private void coloraRIGHE()

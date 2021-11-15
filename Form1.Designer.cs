@@ -80,6 +80,7 @@
             this.btnApprovaSel = new System.Windows.Forms.Button();
             this.btnFiltra = new System.Windows.Forms.Button();
             this.pbLogo_Wait = new System.Windows.Forms.PictureBox();
+            this.txtProtocolloTT = new System.Windows.Forms.ToolStripTextBox();
             this.contextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bnCOMANDI)).BeginInit();
@@ -93,13 +94,14 @@
             this.contextMenu.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.txtUtenteSel,
+            this.txtProtocolloTT,
             this.toolStripSeparator1,
             this.approvaToolStripMenuItem,
             this.rifiutaToolStripMenuItem,
             this.attesaToolStripMenuItem,
             this.RichiestetoolStripMenuItem1});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(261, 126);
+            this.contextMenu.Size = new System.Drawing.Size(261, 172);
             this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
             // 
             // txtUtenteSel
@@ -120,18 +122,21 @@
             this.approvaToolStripMenuItem.Name = "approvaToolStripMenuItem";
             this.approvaToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
             this.approvaToolStripMenuItem.Text = "Approva";
+            this.approvaToolStripMenuItem.Click += new System.EventHandler(this.approvaToolStripMenuItem_Click);
             // 
             // rifiutaToolStripMenuItem
             // 
             this.rifiutaToolStripMenuItem.Name = "rifiutaToolStripMenuItem";
             this.rifiutaToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
             this.rifiutaToolStripMenuItem.Text = "Rifiuta";
+            this.rifiutaToolStripMenuItem.Click += new System.EventHandler(this.rifiutaToolStripMenuItem_Click);
             // 
             // attesaToolStripMenuItem
             // 
             this.attesaToolStripMenuItem.Name = "attesaToolStripMenuItem";
             this.attesaToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
             this.attesaToolStripMenuItem.Text = "Attesa";
+            this.attesaToolStripMenuItem.Click += new System.EventHandler(this.attesaToolStripMenuItem_Click);
             // 
             // RichiestetoolStripMenuItem1
             // 
@@ -560,6 +565,15 @@
             this.pbLogo_Wait.TabIndex = 156;
             this.pbLogo_Wait.TabStop = false;
             // 
+            // txtProtocolloTT
+            // 
+            this.txtProtocolloTT.BackColor = System.Drawing.SystemColors.Info;
+            this.txtProtocolloTT.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProtocolloTT.Name = "txtProtocolloTT";
+            this.txtProtocolloTT.ReadOnly = true;
+            this.txtProtocolloTT.Size = new System.Drawing.Size(200, 22);
+            this.txtProtocolloTT.Text = "Protocollo";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -653,6 +667,7 @@
         private System.Windows.Forms.Button btnAttesaSel;
         private System.Windows.Forms.Button btnSelTutti;
         private System.Windows.Forms.ToolStripButton btnRicercaAvanzata;
+        private System.Windows.Forms.ToolStripTextBox txtProtocolloTT;
     }
 }
 
