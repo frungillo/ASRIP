@@ -100,7 +100,7 @@ namespace ASRIP
                 A.VARIAZIONI_UTENTE as UTENTE, 
                 LOWER(A.VARIAZIONI_NOTE) as NOTE, 
                 A.VARIAZIONI_NUM_PROTOCOLLO as PROTOCOLLO";
-            if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.DATA_COM_EVENTO as Data_Comun"; else { sql += " ,'ND' as Data_Comun"; }
+            if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.VARIAZIONI_DATA_INSERIMENTO as Data_Comun"; else { sql += " ,'ND' as Data_Comun"; }
             sql += $@" FROM {currentSate} A WHERE TRIM(A.VARIAZIONI_CODICE_BDROP) IN ({_richieste}) 
             and A.variazioni_da_data between to_date('{txtDataDa.Value.ToShortDateString()}','dd/mm/yyyy') and to_date('{txtDataA.Value.ToShortDateString()}','dd/mm/yyyy')
             and
@@ -423,13 +423,19 @@ namespace ASRIP
                 if (dg.ShowDialog(this) == DialogResult.OK)
                 {
                     StreamWriter w = new StreamWriter(dg.FileName, false);
-                    string ret = "NOMINATIVO;Richiesta;Tratt.;\r\n";
+                    string ret = "";
+                    foreach (DataGridViewColumn col in grigliaRichieste.Columns)
+                    {
+                        ret += col.HeaderText + ";";
+                    }
+                    ret += "\r\n";
                     foreach (DataGridViewRow row in grigliaRichieste.Rows)
                     {
-                        ret += row.Cells[3].Value.ToString() + ";" +
-                            row.Cells[0].Value.ToString() + " (" +
-                            row.Cells[11].Value.ToString() + ");" +
-                            row.Cells[9].Value.ToString() + ";\r\n";
+                        foreach (DataGridViewCell cel in row.Cells)
+                        {
+                            ret += "=\""+ cel.Value?.ToString() + "\";";
+                        }
+                        ret += "\r\n";
                     }
                     w.Write(ret);
                     w.Flush();
