@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.txtUtenteSel = new System.Windows.Forms.ToolStripTextBox();
+            this.txtProtocolloTT = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.approvaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rifiutaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,7 +81,6 @@
             this.btnApprovaSel = new System.Windows.Forms.Button();
             this.btnFiltra = new System.Windows.Forms.Button();
             this.pbLogo_Wait = new System.Windows.Forms.PictureBox();
-            this.txtProtocolloTT = new System.Windows.Forms.ToolStripTextBox();
             this.contextMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grigliaRichieste)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bnCOMANDI)).BeginInit();
@@ -101,7 +101,7 @@
             this.attesaToolStripMenuItem,
             this.RichiestetoolStripMenuItem1});
             this.contextMenu.Name = "contextMenu";
-            this.contextMenu.Size = new System.Drawing.Size(261, 172);
+            this.contextMenu.Size = new System.Drawing.Size(261, 150);
             this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
             // 
             // txtUtenteSel
@@ -111,6 +111,15 @@
             this.txtUtenteSel.ReadOnly = true;
             this.txtUtenteSel.Size = new System.Drawing.Size(200, 26);
             this.txtUtenteSel.Text = "Utente";
+            // 
+            // txtProtocolloTT
+            // 
+            this.txtProtocolloTT.BackColor = System.Drawing.SystemColors.Info;
+            this.txtProtocolloTT.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtProtocolloTT.Name = "txtProtocolloTT";
+            this.txtProtocolloTT.ReadOnly = true;
+            this.txtProtocolloTT.Size = new System.Drawing.Size(200, 22);
+            this.txtProtocolloTT.Text = "Protocollo";
             // 
             // toolStripSeparator1
             // 
@@ -173,8 +182,8 @@
             this.grigliaRichieste.AllowUserToAddRows = false;
             this.grigliaRichieste.AllowUserToDeleteRows = false;
             this.grigliaRichieste.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Ivory;
-            this.grigliaRichieste.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Ivory;
+            this.grigliaRichieste.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.grigliaRichieste.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -184,8 +193,8 @@
             this.grigliaRichieste.MultiSelect = false;
             this.grigliaRichieste.Name = "grigliaRichieste";
             this.grigliaRichieste.RowHeadersVisible = false;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grigliaRichieste.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grigliaRichieste.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.grigliaRichieste.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grigliaRichieste.Size = new System.Drawing.Size(1247, 567);
             this.grigliaRichieste.TabIndex = 8;
@@ -525,7 +534,7 @@
             this.btnRifiutaSel.Name = "btnRifiutaSel";
             this.btnRifiutaSel.Size = new System.Drawing.Size(103, 30);
             this.btnRifiutaSel.TabIndex = 164;
-            this.btnRifiutaSel.Text = "Approva Sel";
+            this.btnRifiutaSel.Text = "Nega Sel";
             this.btnRifiutaSel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnRifiutaSel.UseVisualStyleBackColor = true;
             // 
@@ -542,6 +551,7 @@
             this.btnApprovaSel.Text = "Approva Sel";
             this.btnApprovaSel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnApprovaSel.UseVisualStyleBackColor = true;
+            this.btnApprovaSel.Click += new System.EventHandler(this.btnApprovaSel_Click);
             // 
             // btnFiltra
             // 
@@ -564,15 +574,6 @@
             this.pbLogo_Wait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbLogo_Wait.TabIndex = 156;
             this.pbLogo_Wait.TabStop = false;
-            // 
-            // txtProtocolloTT
-            // 
-            this.txtProtocolloTT.BackColor = System.Drawing.SystemColors.Info;
-            this.txtProtocolloTT.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProtocolloTT.Name = "txtProtocolloTT";
-            this.txtProtocolloTT.ReadOnly = true;
-            this.txtProtocolloTT.Size = new System.Drawing.Size(200, 22);
-            this.txtProtocolloTT.Text = "Protocollo";
             // 
             // Form1
             // 
