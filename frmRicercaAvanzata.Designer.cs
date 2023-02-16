@@ -38,7 +38,7 @@ namespace ASRIP
             // 
             this.grpCampi.Location = new System.Drawing.Point(12, 12);
             this.grpCampi.Name = "grpCampi";
-            this.grpCampi.Size = new System.Drawing.Size(377, 522);
+            this.grpCampi.Size = new System.Drawing.Size(377, 447);
             this.grpCampi.TabIndex = 0;
             this.grpCampi.TabStop = false;
             this.grpCampi.Text = "Filtri";
@@ -47,7 +47,7 @@ namespace ASRIP
             // 
             this.button1.Image = global::ASRIP.Properties.Resources.application_exit_2;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(233, 540);
+            this.button1.Location = new System.Drawing.Point(233, 465);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 34);
             this.button1.TabIndex = 2;
@@ -60,7 +60,7 @@ namespace ASRIP
             // 
             this.btnOK.Image = global::ASRIP.Properties.Resources.dialog_ok_3;
             this.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnOK.Location = new System.Drawing.Point(314, 540);
+            this.btnOK.Location = new System.Drawing.Point(314, 465);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 34);
             this.btnOK.TabIndex = 1;
@@ -73,11 +73,12 @@ namespace ASRIP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(401, 584);
+            this.ClientSize = new System.Drawing.Size(401, 507);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.grpCampi);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximumSize = new System.Drawing.Size(417, 546);
             this.Name = "frmRicercaAvanzata";
             this.Text = "Ricerca Avanzata";
             this.ResumeLayout(false);

@@ -28,12 +28,12 @@ namespace ASRIP
         string AMBITO;
         private string _richieste = "'1','2','4','5','6','7'";
         private List<string> _ProtocolliSel;
+        private string _filtroRicerca = "";
+        private bool _tuttiSel = false;
 
-        
 
- 
 
-    private void coloraRIGHE()
+        private void coloraRIGHE()
         {
             foreach(DataGridViewRow dgvRIGA in grigliaRichieste.Rows)
             {
@@ -65,15 +65,14 @@ namespace ASRIP
 
                 }
             }
-        }
-       
+        } 
         private void compilaGriglia()
         {
             TimeSpan ts = txtDataA.Value.Subtract(txtDataDa.Value);
             if(ts.Days > 40)
             {
                 if (MessageBox.Show("Attenzione elaborazioni superiori a 40 giorni " +
-                    "potrebbero richiedere molto tempo, durante il quale il programma potrebbe sebrare 'bloccato'. " +
+                    "potrebbero richiedere molto tempo, durante il quale il programma potrebbe sembrare 'bloccato'. " +
                     "Sei sicuro di procedere?", "AVVISO", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             }
             grigliaRichieste.DataSource = null;
@@ -81,6 +80,7 @@ namespace ASRIP
             grigliaRichieste.Columns.Clear();
             
             int i = 0;
+            string anno = DateTime.Now.Year.ToString();
             db db = new db();
             DataTable dt = new DataTable();
             string sql = @"SELECT
@@ -99,8 +99,19 @@ namespace ASRIP
                 end as CONS,
                 A.VARIAZIONI_UTENTE as UTENTE, 
                 LOWER(A.VARIAZIONI_NOTE) as NOTE, 
-                A.VARIAZIONI_NUM_PROTOCOLLO as PROTOCOLLO";
+                A.VARIAZIONI_NUM_PROTOCOLLO as PROTOCOLLO
+                ";
             if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.VARIAZIONI_DATA_INSERIMENTO as Data_Comun"; else { sql += " ,'ND' as Data_Comun"; }
+            sql += $@",(SELECT ROUND((NVL(B.FEROREGGAP,0)+NVL(B.FERPROGORE,0)),2) FROM PAGHENET.ARCDIPR2 B WHERE B.CODDIPPR2 = A.VARIAZIONI_MATRICOLA AND B.CODAZIPR2 = 1) AS FERIE_RESIDUE,
+                        (SELECT SIGLAQUALIFICA FROM BDROPTABLES.QUALIFICHESTORICO WHERE MATRICOLAAUTISTA = A.VARIAZIONI_MATRICOLA AND TRUNC(SYSDATE, 'YEAR') BETWEEN INIZIOVALIDITA and FINEVALIDITA) AS GR,
+                        DECODE((SELECT SUBSTR(SIGLAQUALIFICA, 1, 1) FROM BDROPTABLES.QUALIFICHESTORICO WHERE MATRICOLAAUTISTA = A.VARIAZIONI_MATRICOLA AND TRUNC(SYSDATE, 'YEAR') BETWEEN INIZIOVALIDITA AND FINEVALIDITA),
+                        'C', '01/07/{anno} - 21/07/{anno}',
+                        'A', '22/07/{anno} - 11/08/{anno}',
+                        'B', '12/08/{anno} - 01/09/{anno}') AS PERIODO_ASSEGNATO,
+                        (SELECT ROUND( ROUND(NVL(fesprogore,0)+NVL(fesoreggap,0),2) * (SELECT TO_NUMBER(TRUNC((orexass+orexriposo) / 60) ||','|| MOD((orexass+orexriposo),60)) FROM INAZ.ORARI 
+                            WHERE Codora in (SELECT codora FROM inaz.giorno_rtp WHERE codazi =1 and coddip = A.VARIAZIONI_MATRICOLA and data = trunc(sysdate))),2) 
+                            FROM paghenet.arcdipr2 a WHERE a.CODDIPPR2 = A.VARIAZIONI_MATRICOLA)AS RESIDUOORE34,
+                        A.VARIAZIONI_DATA_INSERIMENTO_UP, A.VARIAZIONI_UTENTE_UP";
             sql += $@" FROM {currentSate} A WHERE TRIM(A.VARIAZIONI_CODICE_BDROP) IN ({_richieste}) 
             and A.variazioni_da_data between to_date('{txtDataDa.Value.ToShortDateString()}','dd/mm/yyyy') and to_date('{txtDataA.Value.ToShortDateString()}','dd/mm/yyyy')
             and
@@ -142,7 +153,7 @@ namespace ASRIP
             grigliaRichieste.Columns[10].Width = 200;
             grigliaRichieste.Columns[11].Width = 60;
             grigliaRichieste.Columns[12].Width = 120;
-            grigliaRichieste.Columns[13].Width = 30;
+            grigliaRichieste.Columns[19].Width = 35;
          
 
         }
@@ -256,7 +267,6 @@ namespace ASRIP
                 Application.Exit();
             }
         }
-
         private void GrigliaRichieste_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if(e.ColumnIndex == 13 && grigliaRichieste[8, e.RowIndex].Value.ToString() != "--")
@@ -274,14 +284,12 @@ namespace ASRIP
             }
             
         }
-
         private void PulsantiGesitone(bool stato)
         {
             btnApprovaSel.Enabled = stato;
             btnAttesaSel.Enabled = stato;
             btnRifiutaSel.Enabled = stato;
         }
-
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             try
@@ -361,10 +369,7 @@ namespace ASRIP
             {
                 MessageBox.Show("GrigliaRichieste_CellDoubleClick: " + exc.Message, "Attenzione");
             }
-        }
-
-        private string _filtroRicerca="";
-        
+        }      
         private void TxtRicerca_TextChanged(object sender, EventArgs e)
         {
             try
@@ -528,60 +533,60 @@ namespace ASRIP
                 MessageBox.Show("btnEXIT_Click: " + exc.Message, "Attenzione");
             }
         }
-
         private void ricaricaDatiToolStripMenuItem_Click(object sender, EventArgs e)
         {
             compilaGriglia();
         }
-
         private void chkMostraSoloRichieste_CheckedChanged(object sender, EventArgs e)
         {
             if (chkMostraSoloRichieste.Checked) _richieste = "'6'"; else _richieste = "'1','2','4','5','6','7'";
             txtRicerca.Text = "";
             compilaGriglia();
         }
-
         private void btnFiltra_Click(object sender, EventArgs e)
         {
             compilaGriglia();
         }
-
         private void txtDataDa_ValueChanged(object sender, EventArgs e)
         {
             txtDataA.Value = txtDataDa.Value.AddDays(3);
         }
-
         private void txtDataA_ValueChanged(object sender, EventArgs e)
         {
             if (txtDataA.Value < txtDataDa.Value)
             {
                 txtDataA.Value = txtDataDa.Value;
             }
-        }
-        private bool _tuttiSel = false;
+        }      
         private void btnSelTutti_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in grigliaRichieste.Rows)
+            try
             {
-                if(row.Cells[8].Value.ToString() != "--")
+                foreach (DataGridViewRow row in grigliaRichieste.Rows)
                 {
-                    row.Cells[13].Value = _tuttiSel ? false:true;
-                    if ((bool)row.Cells[13].Value)
+                    if (row.Cells[8].Value.ToString() != "--")
                     {
-                        _ProtocolliSel.Add(row.Cells[11].Value.ToString());
-                    }
-                    else
-                    {
-                        _ProtocolliSel.Remove(row.Cells[11].Value.ToString());
-                    }
-                  
-                }
-            }
-            lblINFO.Text = "Selezionati " + _ProtocolliSel.Count();
-            _tuttiSel = _tuttiSel?false: true;
-            if (_ProtocolliSel.Count > 0) PulsantiGesitone(true); else PulsantiGesitone(false);
-        }
+                        row.Cells[19].Value = _tuttiSel ? false : true;
+                        if ((bool)row.Cells[19].Value)
+                        {
+                            _ProtocolliSel.Add(row.Cells[11].Value.ToString());
+                        }
+                        else
+                        {
+                            _ProtocolliSel.Remove(row.Cells[11].Value.ToString());
+                        }
 
+                    }
+                }
+                lblINFO.Text = "Selezionati " + _ProtocolliSel.Count();
+                _tuttiSel = _tuttiSel ? false : true;
+                if (_ProtocolliSel.Count > 0) PulsantiGesitone(true); else PulsantiGesitone(false);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("btnSelTutti_Click: " + exc.Message, "Attenzione");
+            }
+        }
         private void btnRicercaAvanzata_Click(object sender, EventArgs e)
         {
             txtRicerca.Text = "";
@@ -592,7 +597,6 @@ namespace ASRIP
             TxtRicerca_TextChanged(null, null);
             
         }
-
         private void RichiestetoolStripMenuItem1_Click(object sender, EventArgs e)
         {
             /**/
@@ -603,7 +607,6 @@ namespace ASRIP
 
             
         }
-
         private void approvaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Approvo la richiesta?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -613,7 +616,6 @@ namespace ASRIP
                 compilaGriglia();
             }
         }
-
         private void rifiutaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Rifiuto la richiesta?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -623,7 +625,6 @@ namespace ASRIP
                 compilaGriglia();
             }
         }
-
         private void attesaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Metto la richiesta in attesa?", "Conferma", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -633,10 +634,65 @@ namespace ASRIP
                 compilaGriglia();
             }
         }
-
         private void btnApprovaSel_Click(object sender, EventArgs e)
         {
+            try
+            {
+                foreach(DataGridViewRow dgvROW in grigliaRichieste.Rows)
+                {
+                    if((bool)dgvROW.Cells[19].Value == true)
+                    {
+                        commons.scriviLog("Approvazione richiesta " + dgvROW.Cells[11].Value.ToString());
+                        commons.alteraStatoRichiesta("S", dgvROW.Cells[11].Value.ToString());
+                    }
+                    
+                }              
+                compilaGriglia();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("btnApprovaSel_Click: " + exc.Message, "Attenzione");
+            }
+        }
+        private void btnAttesaSel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (DataGridViewRow dgvROW in grigliaRichieste.Rows)
+                {
+                    if ((bool)dgvROW.Cells[19].Value == true)
+                    {
+                        commons.scriviLog("Attesa richiesta " + dgvROW.Cells[11].Value.ToString());
+                        commons.alteraStatoRichiesta("A", dgvROW.Cells[11].Value.ToString());
+                    }
 
+                }
+                compilaGriglia();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("btnAttesaSel_Click: " + exc.Message, "Attenzione");
+            }
+        }
+        private void btnRifiutaSel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (DataGridViewRow dgvROW in grigliaRichieste.Rows)
+                {
+                    if ((bool)dgvROW.Cells[19].Value == true)
+                    {
+                        commons.scriviLog("Rifiuto richiesta " + dgvROW.Cells[11].Value.ToString());
+                        commons.alteraStatoRichiesta("N", dgvROW.Cells[11].Value.ToString());
+                    }
+
+                }
+                compilaGriglia();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("btnRifiutaSel_Click: " + exc.Message, "Attenzione");
+            }
         }
 
         private void contextMenu_Opening(object sender, CancelEventArgs e)

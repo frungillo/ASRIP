@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.txtUtenteSel = new System.Windows.Forms.ToolStripTextBox();
@@ -182,8 +182,8 @@
             this.grigliaRichieste.AllowUserToAddRows = false;
             this.grigliaRichieste.AllowUserToDeleteRows = false;
             this.grigliaRichieste.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Ivory;
-            this.grigliaRichieste.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Ivory;
+            this.grigliaRichieste.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.grigliaRichieste.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -193,8 +193,8 @@
             this.grigliaRichieste.MultiSelect = false;
             this.grigliaRichieste.Name = "grigliaRichieste";
             this.grigliaRichieste.RowHeadersVisible = false;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grigliaRichieste.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grigliaRichieste.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.grigliaRichieste.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grigliaRichieste.Size = new System.Drawing.Size(1247, 567);
             this.grigliaRichieste.TabIndex = 8;
@@ -438,7 +438,7 @@
             // 
             this.btnEXIT.Image = ((System.Drawing.Image)(resources.GetObject("btnEXIT.Image")));
             this.btnEXIT.Name = "btnEXIT";
-            this.btnEXIT.Size = new System.Drawing.Size(93, 22);
+            this.btnEXIT.Size = new System.Drawing.Size(180, 22);
             this.btnEXIT.Text = "Exit";
             this.btnEXIT.Click += new System.EventHandler(this.btnEXIT_Click);
             // 
@@ -455,14 +455,14 @@
             // 
             this.btnAllineaDB.Image = ((System.Drawing.Image)(resources.GetObject("btnAllineaDB.Image")));
             this.btnAllineaDB.Name = "btnAllineaDB";
-            this.btnAllineaDB.Size = new System.Drawing.Size(160, 22);
+            this.btnAllineaDB.Size = new System.Drawing.Size(180, 22);
             this.btnAllineaDB.Text = "Allinea database";
             this.btnAllineaDB.Click += new System.EventHandler(this.btnAllineaDB_Click);
             // 
             // ricaricaDatiToolStripMenuItem
             // 
             this.ricaricaDatiToolStripMenuItem.Name = "ricaricaDatiToolStripMenuItem";
-            this.ricaricaDatiToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.ricaricaDatiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ricaricaDatiToolStripMenuItem.Text = "Ricarica dati";
             this.ricaricaDatiToolStripMenuItem.Click += new System.EventHandler(this.ricaricaDatiToolStripMenuItem_Click);
             // 
@@ -523,6 +523,7 @@
             this.btnAttesaSel.Text = "Attesa Sel";
             this.btnAttesaSel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAttesaSel.UseVisualStyleBackColor = true;
+            this.btnAttesaSel.Click += new System.EventHandler(this.btnAttesaSel_Click);
             // 
             // btnRifiutaSel
             // 
@@ -537,6 +538,7 @@
             this.btnRifiutaSel.Text = "Nega Sel";
             this.btnRifiutaSel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnRifiutaSel.UseVisualStyleBackColor = true;
+            this.btnRifiutaSel.Click += new System.EventHandler(this.btnRifiutaSel_Click);
             // 
             // btnApprovaSel
             // 

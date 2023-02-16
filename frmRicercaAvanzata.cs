@@ -22,8 +22,10 @@ namespace ASRIP
             InitializeComponent();
             _dgv = dgv;
             int x = 5; int y = 15;
+
             foreach (DataGridViewColumn col in dgv.Columns)
             {
+                if (col.Index == 12) return;
                 if (col.HeaderText == "SEL") continue;
                 Label lbl = new Label();
                 lbl.Text = col.HeaderText;
@@ -32,7 +34,7 @@ namespace ASRIP
                 if (col.ValueType == typeof(DateTime))
                 {
                      txt = new DateTimePicker();
-                    ((DateTimePicker)txt).Value = new DateTime(1900, 01, 01);
+                    ((DateTimePicker)txt).Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
                     ((DateTimePicker)txt).Format = DateTimePickerFormat.Short;
                 } else
                 {
