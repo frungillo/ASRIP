@@ -34,7 +34,7 @@ namespace ASRIP
                 if (col.ValueType == typeof(DateTime))
                 {
                      txt = new DateTimePicker();
-                    ((DateTimePicker)txt).Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+                    ((DateTimePicker)txt).Value = new DateTime(1900, 1, 1);
                     ((DateTimePicker)txt).Format = DateTimePickerFormat.Short;
                 } else
                 {

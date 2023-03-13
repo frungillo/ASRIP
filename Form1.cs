@@ -48,7 +48,7 @@ namespace ASRIP
                     dgvRIGA.DefaultCellStyle.BackColor = Color.LightGray;
                     dgvRIGA.DefaultCellStyle.Font = new Font("Calibri", 10, FontStyle.Italic);
                     dgvRIGA.DefaultCellStyle.ForeColor = Color.Gray;
-                } else { dgvRIGA.Cells[13].ReadOnly = false; dgvRIGA.Cells[13].Value = false; }
+                } else { dgvRIGA.Cells[13].ReadOnly = false; } //dgvRIGA.Cells[13].Value = false;
                 if (dgvRIGA.Cells[8].Value.ToString() == "S")
                 {
                     dgvRIGA.Cells[8].Style.BackColor = Color.LightGreen;
@@ -79,7 +79,7 @@ namespace ASRIP
             grigliaRichieste.Rows.Clear();
             grigliaRichieste.Columns.Clear();
             
-            int i = 0;
+            //int i = 0;
             string anno = DateTime.Now.Year.ToString();
             db db = new db();
             DataTable dt = new DataTable();
@@ -96,7 +96,7 @@ namespace ASRIP
                     when 1 then '--'
                     when 4 then '--'
                     else  A.VARIAZIONI_FLAG_CONSENSO
-                end as CONS,
+                end as STATO,
                 A.VARIAZIONI_UTENTE as UTENTE, 
                 LOWER(A.VARIAZIONI_NOTE) as NOTE, 
                 A.VARIAZIONI_NUM_PROTOCOLLO as PROTOCOLLO
@@ -108,9 +108,7 @@ namespace ASRIP
                         'C', '01/07/{anno} - 21/07/{anno}',
                         'A', '22/07/{anno} - 11/08/{anno}',
                         'B', '12/08/{anno} - 01/09/{anno}') AS PERIODO_ASSEGNATO,
-                        (SELECT ROUND( ROUND(NVL(fesprogore,0)+NVL(fesoreggap,0),2) * (SELECT TO_NUMBER(TRUNC((orexass+orexriposo) / 60) ||','|| MOD((orexass+orexriposo),60)) FROM INAZ.ORARI 
-                            WHERE Codora in (SELECT codora FROM inaz.giorno_rtp WHERE codazi =1 and coddip = A.VARIAZIONI_MATRICOLA and data = trunc(sysdate))),2) 
-                            FROM paghenet.arcdipr2 a WHERE a.CODDIPPR2 = A.VARIAZIONI_MATRICOLA)AS RESIDUOORE34,
+                        (SELECT ROUND(NVL(fesprogore,0)+NVL(fesoreggap,0),2) FROM paghenet.arcdipr2 a WHERE a.CODDIPPR2 = A.VARIAZIONI_MATRICOLA)AS RESIDUOGG34,
                         A.VARIAZIONI_DATA_INSERIMENTO_UP, A.VARIAZIONI_UTENTE_UP";
             sql += $@" FROM {currentSate} A WHERE TRIM(A.VARIAZIONI_CODICE_BDROP) IN ({_richieste}) 
             and A.variazioni_da_data between to_date('{txtDataDa.Value.ToShortDateString()}','dd/mm/yyyy') and to_date('{txtDataA.Value.ToShortDateString()}','dd/mm/yyyy')
@@ -122,7 +120,14 @@ namespace ASRIP
             order by A.VARIAZIONI_DA_DATA, A.VARIAZIONI_MATRICOLA ";
             //AND TRIM(VARIAZIONI_CODICE_ANM) IN ('11A','11C','A','AA','33A','33C','7')
 
-            
+            //SELECT PER RECUPERARE RESIDUO ORE 34
+            //(SELECT ROUND(ROUND(NVL(fesprogore, 0) + NVL(fesoreggap, 0), 2) * (SELECT TO_NUMBER(TRUNC((orexass + orexriposo) / 60) || ',' || MOD((orexass + orexriposo), 60)) FROM INAZ.ORARI
+            //                WHERE Codora in (SELECT codora FROM inaz.giorno_rtp WHERE codazi = 1 and coddip = A.VARIAZIONI_MATRICOLA and data = trunc(sysdate))),2) 
+            //                FROM paghenet.arcdipr2 a WHERE a.CODDIPPR2 = A.VARIAZIONI_MATRICOLA)AS RESIDUOORE34
+
+
+
+
             _bs = new BindingSource();           
             dt = db.getDataTable(sql);
             
@@ -694,7 +699,6 @@ namespace ASRIP
                 MessageBox.Show("btnRifiutaSel_Click: " + exc.Message, "Attenzione");
             }
         }
-
         private void contextMenu_Opening(object sender, CancelEventArgs e)
         {
             try
