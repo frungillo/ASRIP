@@ -66,6 +66,14 @@ namespace ASRIP
                 }
             }
         } 
+        //COME DA RICHIESTA EFFETTUATA ANCHE TRAMITE MAIL DALL'ING VITIELLO, HO INSERITO CODICE PER LA SELEZIONE SENZA VINCOLI DEI RECORDS DIVERSI DAL MARCATORE "--" (MAURO DE ROSA 15/03/2023)
+        private void inizializzaCheck()
+        {
+            foreach (DataGridViewRow row in grigliaRichieste.Rows)
+            {
+                row.Cells[19].Value = false;
+            }
+        }
         private void compilaGriglia()
         {
             TimeSpan ts = txtDataA.Value.Subtract(txtDataDa.Value);
@@ -143,6 +151,7 @@ namespace ASRIP
             col.HeaderText = "SEL";
             col.ValueType = typeof(bool);
             grigliaRichieste.Columns.Add(col);
+            inizializzaCheck();
             coloraRIGHE();
             grigliaRichieste.Columns[0].Width = 40; //codice
             grigliaRichieste.Columns[1].Width = 80; //da da
@@ -274,20 +283,26 @@ namespace ASRIP
         }
         private void GrigliaRichieste_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex == 13 && grigliaRichieste[8, e.RowIndex].Value.ToString() != "--")
+            if (e.ColumnIndex == 19 && grigliaRichieste[8, e.RowIndex].Value.ToString() != "--")
             {
-                if (!(bool)grigliaRichieste[13, e.RowIndex].Value) {
-                    grigliaRichieste[13, e.RowIndex].Value = true;
-                    _ProtocolliSel.Add(grigliaRichieste[11, e.RowIndex].Value.ToString());
-                } else
+                if (!(bool)grigliaRichieste[19, e.RowIndex].Value)
                 {
-                    grigliaRichieste[13, e.RowIndex].Value = false;
+                    grigliaRichieste[19, e.RowIndex].Value = true;
+                    _ProtocolliSel.Add(grigliaRichieste[11, e.RowIndex].Value.ToString());
+                }
+                else
+                {
+                    grigliaRichieste[19, e.RowIndex].Value = false;
                     _ProtocolliSel.Remove(grigliaRichieste[11, e.RowIndex].Value.ToString());
                 }
                 lblINFO.Text = "Selezionati " + _ProtocolliSel.Count();
                 if (_ProtocolliSel.Count > 0) PulsantiGesitone(true); else PulsantiGesitone(false);
             }
-            
+            if(e.RowIndex == -1)
+            {
+                inizializzaCheck();
+                coloraRIGHE();
+            }
         }
         private void PulsantiGesitone(bool stato)
         {
@@ -541,6 +556,8 @@ namespace ASRIP
         private void ricaricaDatiToolStripMenuItem_Click(object sender, EventArgs e)
         {
             compilaGriglia();
+            _ProtocolliSel.Clear();
+            lblINFO.Text = "Selezionati " + _ProtocolliSel.Count();
         }
         private void chkMostraSoloRichieste_CheckedChanged(object sender, EventArgs e)
         {
@@ -600,7 +617,7 @@ namespace ASRIP
             frm.ShowDialog(this);
             if (frm.filtro != "") _filtroRicerca = frm.filtro;
             TxtRicerca_TextChanged(null, null);
-            
+            inizializzaCheck();
         }
         private void RichiestetoolStripMenuItem1_Click(object sender, EventArgs e)
         {
