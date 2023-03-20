@@ -112,10 +112,7 @@ namespace ASRIP
             if (currentSate == "ANMIS1.ANM_VROS_D_VARIAZIONI") sql += "    ,A.VARIAZIONI_DATA_INSERIMENTO as Data_Comun"; else { sql += " ,'ND' as Data_Comun"; }
             sql += $@",(SELECT ROUND((NVL(B.FEROREGGAP,0)+NVL(B.FERPROGORE,0)),2) FROM PAGHENET.ARCDIPR2 B WHERE B.CODDIPPR2 = A.VARIAZIONI_MATRICOLA AND B.CODAZIPR2 = 1) AS FERIE_RESIDUE,
                         (SELECT SIGLAQUALIFICA FROM BDROPTABLES.QUALIFICHESTORICO WHERE MATRICOLAAUTISTA = A.VARIAZIONI_MATRICOLA AND TRUNC(SYSDATE, 'YEAR') BETWEEN INIZIOVALIDITA and FINEVALIDITA) AS GR,
-                        DECODE((SELECT SUBSTR(SIGLAQUALIFICA, 1, 1) FROM BDROPTABLES.QUALIFICHESTORICO WHERE MATRICOLAAUTISTA = A.VARIAZIONI_MATRICOLA AND TRUNC(SYSDATE, 'YEAR') BETWEEN INIZIOVALIDITA AND FINEVALIDITA),
-                        'C', '01/07/{anno} - 21/07/{anno}',
-                        'A', '22/07/{anno} - 11/08/{anno}',
-                        'B', '12/08/{anno} - 01/09/{anno}') AS PERIODO_ASSEGNATO,
+                        (SELECT SIGLACATEGORIA FROM BDROPTABLES.CATEGORIEAUTISTI WHERE MATRICOLAAUTISTA = A.VARIAZIONI_MATRICOLA AND TRUNC(SYSDATE) BETWEEN INIZIOVALIDITA AND FINEVALIDITA) AS CATEGORIA,
                         (SELECT ROUND(NVL(fesprogore,0)+NVL(fesoreggap,0),2) FROM paghenet.arcdipr2 a WHERE a.CODDIPPR2 = A.VARIAZIONI_MATRICOLA)AS RESIDUOGG34,
                         A.VARIAZIONI_DATA_INSERIMENTO_UP, A.VARIAZIONI_UTENTE_UP";
             sql += $@" FROM {currentSate} A WHERE TRIM(A.VARIAZIONI_CODICE_BDROP) IN ({_richieste}) 
@@ -133,7 +130,10 @@ namespace ASRIP
             //                WHERE Codora in (SELECT codora FROM inaz.giorno_rtp WHERE codazi = 1 and coddip = A.VARIAZIONI_MATRICOLA and data = trunc(sysdate))),2) 
             //                FROM paghenet.arcdipr2 a WHERE a.CODDIPPR2 = A.VARIAZIONI_MATRICOLA)AS RESIDUOORE34
 
-
+            //DECODE((SELECT SUBSTR(SIGLAQUALIFICA, 1, 1) FROM BDROPTABLES.QUALIFICHESTORICO WHERE MATRICOLAAUTISTA = A.VARIAZIONI_MATRICOLA AND TRUNC(SYSDATE, 'YEAR') BETWEEN INIZIOVALIDITA AND FINEVALIDITA),
+            //            'C', '01/07/{anno} - 21/07/{anno}',
+            //            'A', '22/07/{anno} - 11/08/{anno}',
+            //            'B', '12/08/{anno} - 01/09/{anno}') AS PERIODO_ASSEGNATO
 
 
             _bs = new BindingSource();           

@@ -43,6 +43,7 @@ namespace ASRIP
                 txt.Tag = col.HeaderText;
                 txt.Location = new Point(lbl.Size.Width + 20, y);
                 txt.Size = new Size(100, 20);
+                txt.Name= col.HeaderText;
                 y += 35;
 
                 grpCampi.Controls.Add(lbl);
@@ -58,7 +59,16 @@ namespace ASRIP
                 
                 if(c.GetType() == typeof(TextBox))
                 {
-                    if (c.Text != "") filtro += c.Tag.ToString() + " like '*" + c.Text.Replace("'","''") + "*' and ";
+                    //QUI' DEVO INSERIRE IL CODICE DI DISCERNIMENTO VALORI STRING OPPURE REAL
+                    if(c.Name == "FERIE_RESIDUE")
+                    {
+                        if (c.Text != "") filtro += c.Tag.ToString() + " >=" + c.Text.Replace("'", "''") + " and ";
+                    }
+                    else
+                    {
+                        if (c.Text != "") filtro += c.Tag.ToString() + " like '*" + c.Text.Replace("'", "''") + "*' and ";
+                    }
+                    
                 }
                 if (c.GetType() == typeof(DateTimePicker))
                 {
