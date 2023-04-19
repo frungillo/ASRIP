@@ -25,7 +25,7 @@ namespace ASRIP
 
             foreach (DataGridViewColumn col in dgv.Columns)
             {
-                if (col.Index == 15) return;
+                if (col.Index == 16) return;
                 if (col.HeaderText == "SEL") continue;
                 Label lbl = new Label();
                 lbl.Text = col.HeaderText;

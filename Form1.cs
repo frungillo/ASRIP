@@ -71,7 +71,7 @@ namespace ASRIP
         {
             foreach (DataGridViewRow row in grigliaRichieste.Rows)
             {
-                row.Cells[19].Value = false;
+                row.Cells[20].Value = false;
             }
         }
         private void compilaGriglia()
@@ -114,7 +114,7 @@ namespace ASRIP
                         (SELECT SIGLAQUALIFICA FROM BDROPTABLES.QUALIFICHESTORICO WHERE MATRICOLAAUTISTA = A.VARIAZIONI_MATRICOLA AND TRUNC(SYSDATE, 'YEAR') BETWEEN INIZIOVALIDITA and FINEVALIDITA) AS GR,
                         (SELECT SIGLACATEGORIA FROM BDROPTABLES.CATEGORIEAUTISTI WHERE MATRICOLAAUTISTA = A.VARIAZIONI_MATRICOLA AND TRUNC(SYSDATE) BETWEEN INIZIOVALIDITA AND FINEVALIDITA) AS CATEGORIA,
                         (SELECT ROUND(NVL(fesprogore,0)+NVL(fesoreggap,0),2) FROM paghenet.arcdipr2 a WHERE a.CODDIPPR2 = A.VARIAZIONI_MATRICOLA)AS RESIDUOGG34,
-                        A.VARIAZIONI_DATA_INSERIMENTO_UP, A.VARIAZIONI_UTENTE_UP";
+                        A.VARIAZIONI_DATA_INSERIMENTO_UP, A.VARIAZIONI_UTENTE_UP,(A.VARIAZIONI_A_DATA - A.VARIAZIONI_DA_DATA) + 1 AS NUM_GG";
             sql += $@" FROM {currentSate} A WHERE TRIM(A.VARIAZIONI_CODICE_BDROP) IN ({_richieste}) 
             and A.variazioni_da_data between to_date('{txtDataDa.Value.ToShortDateString()}','dd/mm/yyyy') and to_date('{txtDataA.Value.ToShortDateString()}','dd/mm/yyyy')
             and
@@ -167,8 +167,9 @@ namespace ASRIP
             grigliaRichieste.Columns[10].Width = 200;
             grigliaRichieste.Columns[11].Width = 60;
             grigliaRichieste.Columns[12].Width = 120;
-            grigliaRichieste.Columns[19].Width = 35;
-         
+            grigliaRichieste.Columns[19].Width = 60;
+            grigliaRichieste.Columns[20].Width = 35;
+
 
         }
         private bool checkAut()
@@ -283,16 +284,16 @@ namespace ASRIP
         }
         private void GrigliaRichieste_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 19 && grigliaRichieste[8, e.RowIndex].Value.ToString() != "--")
+            if (e.ColumnIndex == 20 && grigliaRichieste[8, e.RowIndex].Value.ToString() != "--")
             {
-                if (!(bool)grigliaRichieste[19, e.RowIndex].Value)
+                if (!(bool)grigliaRichieste[20, e.RowIndex].Value)
                 {
-                    grigliaRichieste[19, e.RowIndex].Value = true;
+                    grigliaRichieste[20, e.RowIndex].Value = true;
                     _ProtocolliSel.Add(grigliaRichieste[11, e.RowIndex].Value.ToString());
                 }
                 else
                 {
-                    grigliaRichieste[19, e.RowIndex].Value = false;
+                    grigliaRichieste[20, e.RowIndex].Value = false;
                     _ProtocolliSel.Remove(grigliaRichieste[11, e.RowIndex].Value.ToString());
                 }
                 lblINFO.Text = "Selezionati " + _ProtocolliSel.Count();
@@ -588,8 +589,8 @@ namespace ASRIP
                 {
                     if (row.Cells[8].Value.ToString() != "--")
                     {
-                        row.Cells[19].Value = _tuttiSel ? false : true;
-                        if ((bool)row.Cells[19].Value)
+                        row.Cells[20].Value = _tuttiSel ? false : true;
+                        if ((bool)row.Cells[20].Value)
                         {
                             _ProtocolliSel.Add(row.Cells[11].Value.ToString());
                         }
