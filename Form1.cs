@@ -663,7 +663,7 @@ namespace ASRIP
             {
                 foreach(DataGridViewRow dgvROW in grigliaRichieste.Rows)
                 {
-                    if((bool)dgvROW.Cells[19].Value == true)
+                    if((bool)dgvROW.Cells[20].Value == true)
                     {
                         commons.scriviLog("Approvazione richiesta " + dgvROW.Cells[11].Value.ToString());
                         commons.alteraStatoRichiesta("S", dgvROW.Cells[11].Value.ToString());
@@ -683,7 +683,7 @@ namespace ASRIP
             {
                 foreach (DataGridViewRow dgvROW in grigliaRichieste.Rows)
                 {
-                    if ((bool)dgvROW.Cells[19].Value == true)
+                    if ((bool)dgvROW.Cells[20].Value == true)
                     {
                         commons.scriviLog("Attesa richiesta " + dgvROW.Cells[11].Value.ToString());
                         commons.alteraStatoRichiesta("A", dgvROW.Cells[11].Value.ToString());
@@ -703,7 +703,7 @@ namespace ASRIP
             {
                 foreach (DataGridViewRow dgvROW in grigliaRichieste.Rows)
                 {
-                    if ((bool)dgvROW.Cells[19].Value == true)
+                    if ((bool)dgvROW.Cells[20].Value == true)
                     {
                         commons.scriviLog("Rifiuto richiesta " + dgvROW.Cells[11].Value.ToString());
                         commons.alteraStatoRichiesta("N", dgvROW.Cells[11].Value.ToString());
