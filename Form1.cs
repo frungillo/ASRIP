@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Deployment.Application;
 using System.Reflection;
 using System.Threading;
+using System.Net.Mail;
 
 namespace ASRIP
 {
@@ -235,9 +236,36 @@ namespace ASRIP
             this.Load += Form1_Load;
            // btnCestino.Click += BtnCestino_Click;
             //txtData.ValueChanged += TxtData_ValueChanged;
-        }        
+        }
+        private void InviaEmailDiTest()
+        {
+            try
+            {
+                SmtpClient client = new SmtpClient("10.99.150.1", 25);
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress("infopms@anm.it");
+                mailMessage.To.Add("g.frungillo@anm.it");
+                mailMessage.To.Add("u.crispino@anm.it");
+                mailMessage.Subject = "Test Email";
+                mailMessage.Body = "Questo è un messaggio di test inviato dal programma.";
+
+                client.Send(mailMessage);
+                MessageBox.Show("Email inviata con successo.", "Successo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Errore durante l'invio dell'email: " + ex.Message, "Errore", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
+
+            InviaEmailDiTest();
+            this.Close();
+
+
             try
             {
                 if (!checkAut())
